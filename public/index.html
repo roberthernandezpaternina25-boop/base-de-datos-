@@ -1,219 +1,154 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'none'; script-src 'self'; style-src 'self'; img-src 'self' data: https:; connect-src 'self' https:; form-action 'self'; upgrade-insecure-requests;" />
+    <meta name="referrer" content="no-referrer" />
+    <meta name="description" content="Tienda de ropa urbana moderna y cómoda" />
+    <title>Vertic7 | ropa a tu estilo</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header class="hero">
+      <nav class="navbar">
+        <a href="#" class="brand">Vertic7</a>
+        <button id="menu-toggle" class="menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-menu" aria-label="Abrir menú">☰</button>
+        <div class="nav-links" id="mobile-menu">
+          <a href="#productos">Productos</a>
+          <a href="#nosotros">Nosotros</a>
+          <a href="#contacto">Contacto</a>
+        </div>
+        <div class="nav-buttons">
+          <button id="open-auth" class="btn-auth" type="button">👤 Cuenta</button>
+          <button id="open-cart" class="cart-pill" type="button">🛍️ Carrito <span id="cart-count">0</span></button>
+        </div>
+      </nav>
 
-  <title>Crear cuenta</title>
+      <div class="hero-content">
+        <div class="hero-copy">
+          <p class="eyebrow">Nueva colección 2026</p>
+          <h1>Ropa urbana que habla de tu estilo.</h1>
+          <p class="hero-text">
+            Descubre colecciones premium con siluetas cómodas, colores modernos y actitud auténtica.
+          </p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#productos">Ver colección</a>
+            <button class="btn btn-secondary" id="hero-register" type="button">Crear cuenta</button>
+          </div>
+        </div>
 
-  <style>
-    * {
-      box-sizing: border-box;
-    }
+        <div class="hero-card">
+          <h3>Vertic7 para tu día a día</h3>
+          <p>
+            Prendas diseñadas para acompañarte con estilo, comodidad y detalles exclusivos.
+          </p>
+          <ul>
+            <li>Materiales suaves y duraderos</li>
+            <li>Diseño urbano y contemporáneo</li>
+            <li>Envío rápido en toda la ciudad</li>
+          </ul>
+        </div>
+      </div>
+    </header>
 
-    body {
-      margin: 0;
-      min-height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-family: Arial, sans-serif;
-      background: #f2f4f7;
-    }
+    <main>
+      <section id="productos" class="products-section">
+        <div class="section-header">
+          <div>
+            <p class="eyebrow">Colección favorita</p>
+            <h2>Prendas que amarás</h2>
+          </div>
+          <p>Estilo urbano con acabados premium y una experiencia moderna.</p>
+        </div>
 
-    .contenedor {
-      width: 100%;
-      max-width: 450px;
-      padding: 30px;
-      background: white;
-      border-radius: 12px;
-      box-shadow: 0 5px 25px rgba(0, 0, 0, 0.1);
-    }
+        <div class="category-filters" id="category-filters">
+          <button class="filter-btn active" data-category="all" type="button">Todos</button>
+          <button class="filter-btn" data-category="women" type="button">Mujer</button>
+          <button class="filter-btn" data-category="men" type="button">Hombre</button>
+          <button class="filter-btn" data-category="accesorios" type="button">Accesorios</button>
+        </div>
 
-    h1 {
-      margin-top: 0;
-      text-align: center;
-      color: #222;
-    }
+        <div id="product-list" class="product-grid"></div>
+      </section>
 
-    .campo {
-      margin-bottom: 16px;
-    }
+      <section class="promo-banner" id="nosotros">
+        <div>
+          <p class="eyebrow">Por qué elegir Vertic7</p>
+          <h3>Moda urbana con actitud, comodidad y calidad.</h3>
+        </div>
+        <a class="btn btn-secondary" href="#contacto">Contáctanos</a>
+      </section>
 
-    label {
-      display: block;
-      margin-bottom: 6px;
-      font-weight: bold;
-      color: #333;
-    }
+      <section class="contact-section" id="contacto">
+        <h3>¿Quieres una prenda personalizada?</h3>
+        <p>Escríbenos y te ayudamos a encontrar el outfit perfecto.</p>
+        <a class="btn btn-primary" href="mailto:ventas@vertic7.com">ventas@vertic7.com</a>
+      </section>
+    </main>
 
-    input {
-      width: 100%;
-      padding: 12px;
-      border: 1px solid #ccc;
-      border-radius: 6px;
-      font-size: 16px;
-    }
+    <div id="auth-overlay" class="auth-overlay"></div>
+    <div id="auth-modal" class="auth-modal" role="dialog" aria-modal="true" aria-labelledby="auth-title">
+      <div class="auth-modal-content">
+        <button id="close-auth" class="auth-close" type="button">✕</button>
+        <h2 id="auth-title">Inicia sesión o regístrate</h2>
 
-    input:focus {
-      outline: none;
-      border-color: #4f46e5;
-    }
+        <div class="auth-tabs">
+          <button class="auth-tab active" data-tab="login" type="button">Iniciar sesión</button>
+          <button class="auth-tab" data-tab="register" type="button">Registrarse</button>
+        </div>
 
-    button {
-      width: 100%;
-      padding: 13px;
-      border: none;
-      border-radius: 6px;
-      background: #4f46e5;
-      color: white;
-      font-size: 16px;
-      font-weight: bold;
-      cursor: pointer;
-    }
+        <form id="login-form" class="auth-form active">
+          <input type="email" id="login-email" placeholder="Correo electrónico" required />
+          <input type="password" id="login-password" placeholder="Contraseña" required />
+          <button type="submit" class="btn btn-primary full-width">Iniciar sesión</button>
+          <p id="login-message" class="auth-message"></p>
+        </form>
 
-    button:hover {
-      background: #4338ca;
-    }
+        <form id="register-form" class="auth-form">
+          <input type="text" id="register-first" placeholder="Nombre" required />
+          <input type="text" id="register-last" placeholder="Apellido" required />
+          <input type="email" id="register-email" placeholder="Correo electrónico" required />
+          <input type="tel" id="register-phone" placeholder="Teléfono" required />
+          <input type="password" id="register-password" placeholder="Contraseña" required minlength="6" />
+          <input type="password" id="register-confirm" placeholder="Confirmar contraseña" required minlength="6" />
+          <button type="submit" class="btn btn-primary full-width">Registrarse</button>
+          <p id="register-message" class="auth-message"></p>
+        </form>
+        <button id="logout-btn" class="btn btn-secondary full-width" type="button" style="display:none;">Cerrar sesión</button>
+      </div>
+    </div>
 
-    #mensaje {
-      margin-top: 15px;
-      text-align: center;
-      font-weight: bold;
-    }
-
-    .exito {
-      color: green;
-    }
-
-    .error {
-      color: red;
-    }
-  </style>
-</head>
-
-<body>
-
-  <div class="contenedor">
-
-    <h1>Crear cuenta</h1>
-
-    <form id="registroForm">
-
-      <div class="campo">
-        <label for="nombre">Nombre</label>
-        <input
-          type="text"
-          id="nombre"
-          name="nombre"
-          required
-        >
+    <div id="cart-overlay" class="cart-overlay"></div>
+    <aside id="cart-panel" class="cart-panel" aria-label="Carrito de compras">
+      <div class="cart-header">
+        <div>
+          <p class="eyebrow">Tu compra</p>
+          <h3>Carrito</h3>
+        </div>
+        <button id="close-cart" class="icon-button" type="button">✕</button>
       </div>
 
-      <div class="campo">
-        <label for="apellido">Apellido</label>
-        <input
-          type="text"
-          id="apellido"
-          name="apellido"
-          required
-        >
+      <div id="cart-items" class="cart-items"></div>
+
+      <div class="cart-summary">
+        <div class="summary-row">
+          <span>Subtotal</span>
+          <strong id="cart-subtotal">$0.00</strong>
+        </div>
+        <div class="summary-row">
+          <span>Envío</span>
+          <strong>Gratis</strong>
+        </div>
+        <button id="checkout-btn" class="btn btn-primary full-width" type="button">Comprar ahora</button>
       </div>
+    </aside>
 
-      <div class="campo">
-        <label for="email">Correo electrónico</label>
-        <input
-          type="email"
-          id="email"
-          name="email"
-          required
-        >
-      </div>
+    <footer>
+      <p>© 2026 Vertic7. Moda urbana y contemporánea.</p>
+    </footer>
 
-      <div class="campo">
-        <label for="telefono">Teléfono</label>
-        <input
-          type="tel"
-          id="telefono"
-          name="telefono"
-          required
-        >
-      </div>
-
-      <div class="campo">
-        <label for="password">Contraseña</label>
-        <input
-          type="password"
-          id="password"
-          name="password"
-          required
-          minlength="6"
-        >
-      </div>
-
-      <button type="submit">
-        Registrarme
-      </button>
-
-    </form>
-
-    <div id="mensaje"></div>
-
-  </div>
-
-  <script>
-    const formulario = document.getElementById("registroForm");
-    const mensaje = document.getElementById("mensaje");
-
-    formulario.addEventListener("submit", async (event) => {
-
-      event.preventDefault();
-
-      mensaje.textContent = "Registrando...";
-      mensaje.className = "";
-
-      const datos = {
-        nombre: document.getElementById("nombre").value,
-        apellido: document.getElementById("apellido").value,
-        email: document.getElementById("email").value,
-        telefono: document.getElementById("telefono").value,
-        password: document.getElementById("password").value
-      };
-
-      try {
-
-        const respuesta = await fetch("/register", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify(datos)
-        });
-
-        const resultado = await respuesta.json();
-
-        if (!respuesta.ok) {
-          throw new Error(
-            resultado.error || "Error registrando usuario"
-          );
-        }
-
-        mensaje.textContent =
-          "¡Usuario registrado correctamente!";
-
-        mensaje.className = "exito";
-
-        formulario.reset();
-
-      } catch (error) {
-
-        console.error(error);
-
-        mensaje.textContent = error.message;
-        mensaje.className = "error";
-      }
-    });
-  </script>
-
-</body>
+    <script src="script.js"></script>
+    <script src="auth.js"></script>
+  </body>
 </html>
