@@ -76,6 +76,13 @@ async function loadUser() {
     currentUser = null;
   }
 
+  if (currentUser && typeof window.setUserLogged === 'function') {
+    window.setUserLogged(true);
+  }
+  if (currentUser && typeof window.fetchCart === 'function') {
+    await window.fetchCart();
+  }
+
   updateUserState();
 }
 
@@ -145,6 +152,13 @@ registerForm.addEventListener('submit', async (event) => {
     }
 
     saveUser(result.usuario);
+    if (typeof window.setUserLogged === 'function') {
+      window.setUserLogged(true);
+    }
+    if (typeof window.syncCartAfterLogin === 'function') {
+      await window.syncCartAfterLogin();
+    }
+
     showMessage(registerMessage, '¡Cuenta creada correctamente! Bienvenido.', 'success');
     registerForm.reset();
     setTimeout(() => toggleAuthModal(false), 1000);
@@ -183,6 +197,13 @@ loginForm.addEventListener('submit', async (event) => {
     }
 
     saveUser(result.usuario);
+    if (typeof window.setUserLogged === 'function') {
+      window.setUserLogged(true);
+    }
+    if (typeof window.syncCartAfterLogin === 'function') {
+      await window.syncCartAfterLogin();
+    }
+
     showMessage(loginMessage, `¡Bienvenido, ${result.usuario.nombre}!`, 'success');
     loginForm.reset();
     setTimeout(() => toggleAuthModal(false), 1000);
@@ -199,6 +220,13 @@ logoutButton.addEventListener('click', async () => {
     });
   } catch (error) {
     console.error('Error cerrando sesión:', error);
+  }
+
+  if (typeof window.setUserLogged === 'function') {
+    window.setUserLogged(false);
+  }
+  if (typeof window.clearCart === 'function') {
+    window.clearCart();
   }
   clearUser();
   toggleAuthModal(false);

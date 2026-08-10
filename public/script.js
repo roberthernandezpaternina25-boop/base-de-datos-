@@ -10,6 +10,8 @@ const cartSubtotal = document.getElementById('cart-subtotal');
 const heroRegister = document.getElementById('hero-register');
 const menuToggle = document.getElementById('menu-toggle');
 const mobileMenu = document.getElementById('mobile-menu');
+const saveCartButton = document.getElementById('save-cart-btn');
+const cartSaveMessage = document.getElementById('cart-save-message');
 
 const products = [
   {
@@ -63,6 +65,7 @@ const products = [
 ];
 
 let cart = [];
+let isUserLogged = false;
 
 function formatPrice(value) {
   return `$${value.toFixed(2)}`;
@@ -120,11 +123,13 @@ function closeCart() {
 
 function updateCart() {
   cartItemsContainer.innerHTML = '';
+  cartSaveMessage.textContent = '';
 
   if (cart.length === 0) {
     cartItemsContainer.innerHTML = `<p class="empty-cart">Tu carrito está vacío.</p>`;
     cartCount.textContent = '0';
     cartSubtotal.textContent = '$0.00';
+    saveCartButton.disabled = true;
     return;
   }
 
@@ -155,9 +160,133 @@ function updateCart() {
       changeCartQuantity(id, action);
     });
   });
+
+  saveCartButton.disabled = !isUserLogged || cart.length === 0;
 }
 
-function addToCart(productId) {
+async function fetchCart() {
+  try {
+    const response = await fetch('/cart', {
+      method: 'GET',
+      credentials: 'include'
+    });
+
+    if (!response.ok) {
+      throw new Error('No hay usuario conectado');
+    }
+
+    const result = await response.json();
+    cart = result.cart.map(entry => {
+      const product = products.find(item => item.id === entry.product_id);
+      return product ? { ...product, quantity: entry.quantity } : null;
+    }).filter(Boolean);
+    updateCart();
+  } catch (error) {
+    cart = [];
+    updateCart();
+  }
+}
+
+async function saveCartToServer() {
+  if (!isUserLogged) return;
+
+  try {
+    const payload = cart.map(item => ({ productId: item.id, quantity: item.quantity }));
+    await fetch('/cart', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      credentials: 'include',
+      body: JSON.stringify({ cart: payload })
+    });
+  } catch (error) {
+    console.error('Error guardando carrito:', error);
+  }
+}
+
+function clearCart() {
+  cart = [];
+  updateCart();
+}
+
+async function syncCartAfterLogin() {
+  try {
+    const response = await fetch('/cart', {
+      method: 'GET',
+      credentials: 'include'
+    });
+
+    if (!response.ok) {
+      throw new Error('No fue posible cargar el carrito');
+    }
+
+    const result = await response.json();
+    const mergedQuantities = {};
+
+    cart.forEach(item => {
+      mergedQuantities[item.id] = (mergedQuantities[item.id] || 0) + item.quantity;
+    });
+
+    result.cart.forEach(entry => {
+      mergedQuantities[entry.product_id] = (mergedQuantities[entry.product_id] || 0) + entry.quantity;
+    });
+
+    cart = Object.entries(mergedQuantities).map(([productId, quantity]) => {
+      const product = products.find(p => p.id === Number(productId));
+      return product ? { ...product, quantity } : null;
+    }).filter(Boolean);
+
+    await saveCartToServer();
+    updateCart();
+  } catch (error) {
+    console.error('Error sincronizando carrito:', error);
+    cart = [];
+    updateCart();
+  }
+}
+
+function setUserLogged(logged) {
+  isUserLogged = logged;
+  saveCartButton.disabled = !logged || cart.length === 0;
+  if (!logged) {
+    clearCart();
+  }
+}
+
+window.clearCart = clearCart;
+window.setUserLogged = setUserLogged;
+window.syncCartAfterLogin = syncCartAfterLogin;
+window.fetchCart = fetchCart;
+
+saveCartButton.addEventListener('click', async () => {
+  if (!isUserLogged) {
+    cartSaveMessage.textContent = 'Inicia sesión para guardar el carrito.';
+    cartSaveMessage.className = 'cart-save-message error';
+    return;
+  }
+
+  if (cart.length === 0) {
+    cartSaveMessage.textContent = 'No hay artículos para guardar.';
+    cartSaveMessage.className = 'cart-save-message error';
+    return;
+  }
+
+  saveCartButton.disabled = true;
+  cartSaveMessage.textContent = 'Guardando carrito...';
+  cartSaveMessage.className = 'cart-save-message';
+
+  try {
+    await saveCartToServer();
+    cartSaveMessage.textContent = 'Carrito guardado correctamente.';
+    cartSaveMessage.className = 'cart-save-message success';
+  } catch (error) {
+    cartSaveMessage.textContent = 'Error guardando carrito.';
+    cartSaveMessage.className = 'cart-save-message error';
+  } finally {
+    saveCartButton.disabled = !isUserLogged || cart.length === 0;
+  }
+});
+
+async function addToCart(productId) {
   const product = products.find(item => item.id === productId);
   const existing = cart.find(item => item.id === productId);
 
@@ -169,6 +298,10 @@ function addToCart(productId) {
 
   updateCart();
   openCart();
+
+  if (isUserLogged) {
+    await saveCartToServer();
+  }
 }
 
 function changeCartQuantity(productId, action) {
@@ -188,6 +321,9 @@ function changeCartQuantity(productId, action) {
   }
 
   updateCart();
+  if (isUserLogged) {
+    saveCartToServer();
+  }
 }
 
 openCartButton.addEventListener('click', openCart);

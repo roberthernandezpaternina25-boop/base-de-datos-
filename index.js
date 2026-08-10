@@ -50,6 +50,25 @@ async function crearTablaUsuarios() {
   }
 }
 
+async function crearTablaCarrito() {
+  try {
+    await pool.query(`
+      CREATE TABLE IF NOT EXISTS cart_items (
+        id SERIAL PRIMARY KEY,
+        user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+        product_id INTEGER NOT NULL,
+        quantity INTEGER NOT NULL DEFAULT 1,
+        added_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        UNIQUE(user_id, product_id)
+      );
+    `);
+
+    console.log("Tabla cart_items lista");
+  } catch (error) {
+    console.error("Error creando la tabla cart_items:", error);
+  }
+}
+
 // Comprobar conexión con PostgreSQL
 app.get("/ping", async (req, res) => {
   try {
@@ -149,6 +168,21 @@ function verifyToken(token) {
   }
 }
 
+function authMiddleware(req, res, next) {
+  const token = req.cookies.token;
+  if (!token) {
+    return res.status(401).json({ error: 'No autenticado' });
+  }
+
+  const payload = verifyToken(token);
+  if (!payload) {
+    return res.status(401).json({ error: 'Token inválido' });
+  }
+
+  req.user = payload;
+  next();
+}
+
 app.post('/login', async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -217,6 +251,122 @@ app.get('/me', async (req, res) => {
   }
 });
 
+app.get('/cart', authMiddleware, async (req, res) => {
+  try {
+    const result = await pool.query(
+      'SELECT product_id, quantity FROM cart_items WHERE user_id = $1 ORDER BY product_id',
+      [req.user.id]
+    );
+
+    res.json({ cart: result.rows });
+  } catch (error) {
+    console.error('Error cargando carrito:', error);
+    res.status(500).json({ error: 'Error interno del servidor' });
+  }
+});
+
+app.post('/cart', authMiddleware, async (req, res) => {
+  try {
+    const { productId, quantity, cart } = req.body;
+
+    if (Array.isArray(cart)) {
+      const bulkItems = cart.map(item => ({
+        productId: Number(item.productId),
+        quantity: Number(item.quantity) || 1
+      })).filter(item => item.productId && item.quantity > 0);
+
+      await pool.query('BEGIN');
+      await pool.query('DELETE FROM cart_items WHERE user_id = $1', [req.user.id]);
+
+      for (const item of bulkItems) {
+        await pool.query(
+          `INSERT INTO cart_items (user_id, product_id, quantity)
+           VALUES ($1, $2, $3)`,
+          [req.user.id, item.productId, item.quantity]
+        );
+      }
+
+      await pool.query('COMMIT');
+    } else {
+      const safeQuantity = Number(quantity) || 1;
+
+      if (!productId || safeQuantity < 1) {
+        return res.status(400).json({ error: 'Producto o cantidad inválida' });
+      }
+
+      await pool.query(
+        `INSERT INTO cart_items (user_id, product_id, quantity)
+         VALUES ($1, $2, $3)
+         ON CONFLICT (user_id, product_id) DO UPDATE
+         SET quantity = cart_items.quantity + EXCLUDED.quantity`,
+        [req.user.id, productId, safeQuantity]
+      );
+    }
+
+    const result = await pool.query(
+      'SELECT product_id, quantity FROM cart_items WHERE user_id = $1 ORDER BY product_id',
+      [req.user.id]
+    );
+
+    res.json({ cart: result.rows });
+  } catch (error) {
+    await pool.query('ROLLBACK');
+    console.error('Error guardando carrito:', error);
+    res.status(500).json({ error: 'Error interno del servidor' });
+  }
+});
+
+app.patch('/cart', authMiddleware, async (req, res) => {
+  try {
+    const { productId, quantity } = req.body;
+    const safeQuantity = Number(quantity);
+
+    if (!productId || safeQuantity < 1) {
+      return res.status(400).json({ error: 'Producto o cantidad inválida' });
+    }
+
+    await pool.query(
+      'UPDATE cart_items SET quantity = $1 WHERE user_id = $2 AND product_id = $3',
+      [safeQuantity, req.user.id, productId]
+    );
+
+    const result = await pool.query(
+      'SELECT product_id, quantity FROM cart_items WHERE user_id = $1 ORDER BY product_id',
+      [req.user.id]
+    );
+
+    res.json({ cart: result.rows });
+  } catch (error) {
+    console.error('Error actualizando carrito:', error);
+    res.status(500).json({ error: 'Error interno del servidor' });
+  }
+});
+
+app.delete('/cart/:productId', authMiddleware, async (req, res) => {
+  try {
+    const productId = Number(req.params.productId);
+
+    if (!productId) {
+      return res.status(400).json({ error: 'Producto inválido' });
+    }
+
+    await pool.query(
+      'DELETE FROM cart_items WHERE user_id = $1 AND product_id = $2',
+      [req.user.id, productId]
+    );
+
+    const result = await pool.query(
+      'SELECT product_id, quantity FROM cart_items WHERE user_id = $1 ORDER BY product_id',
+      [req.user.id]
+    );
+
+    res.json({ cart: result.rows });
+  } catch (error) {
+    console.error('Error eliminando item del carrito:', error);
+    res.status(500).json({ error: 'Error interno del servidor' });
+  }
+});
+
 app.post('/logout', (req, res) => {
   res.clearCookie('token', getCookieOptions());
   res.json({ mensaje: 'Sesión cerrada' });
@@ -228,4 +378,5 @@ app.listen(PORT, async () => {
   console.log(`Servidor funcionando en el puerto ${PORT}`);
 
   await crearTablaUsuarios();
+  await crearTablaCarrito();
 });
