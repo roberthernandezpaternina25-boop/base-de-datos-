@@ -233,12 +233,54 @@ main {
   gap: 24px;
 }
 
-.category-filters {
+.category-filters,
+.subcategory-filters {
   display: flex;
   flex-wrap: wrap;
   gap: 12px;
   margin-bottom: 24px;
   align-items: center;
+}
+
+.add-product-section {
+  background: rgba(15, 23, 42, 0.92);
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  padding: 24px;
+  margin-bottom: 32px;
+}
+
+.add-product-section h3 {
+  margin-top: 0;
+  margin-bottom: 18px;
+}
+
+.add-product-form {
+  display: grid;
+  gap: 16px;
+}
+
+.form-row {
+  display: grid;
+  gap: 8px;
+}
+
+.form-row label {
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+.form-row input,
+.form-row select {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--white);
+  padding: 12px 14px;
+  border-radius: 16px;
+}
+
+.form-row input::placeholder {
+  color: rgba(226, 232, 240, 0.45);
 }
 
 .filter-btn {
@@ -268,6 +310,35 @@ main {
   gap: 18px;
 }
 
+.product-card-empty {
+  grid-column: 1 / -1;
+  max-width: 420px;
+  margin: 0 auto;
+  background: linear-gradient(135deg, rgba(32, 58, 89, 0.9), rgba(58, 92, 124, 0.9));
+  border: 1px solid rgba(255,255,255,0.15);
+}
+
+.product-empty-state {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 250px;
+  text-align: center;
+  padding: 2rem;
+}
+
+.product-empty-state h3 {
+  font-size: 2.2rem;
+  margin: 0 0 0.75rem;
+  color: #f7b731;
+}
+
+.product-empty-state p {
+  margin: 0;
+  font-size: 1.1rem;
+  color: #e7eefb;
+}
+
 .product-card img {
   width: 100%;
   aspect-ratio: 4 / 3;
@@ -286,6 +357,18 @@ main {
   font-size: 1.2rem;
 }
 
+.product-tag {
+  display: inline-flex;
+  margin-top: 10px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--muted);
+}
+
 .product-card p {
   color: var(--muted);
   margin: 0;
@@ -300,9 +383,50 @@ main {
   flex-wrap: wrap;
 }
 
+.price-group {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.product-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
 .price {
   font-weight: 800;
   color: var(--white);
+}
+
+.price-old {
+  color: var(--muted);
+  text-decoration: line-through;
+  font-size: 0.94rem;
+}
+
+.price-current {
+  color: var(--accent);
+}
+
+.whatsapp-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 11px 16px;
+  border-radius: 999px;
+  background: #25D366;
+  color: #050816;
+  font-weight: 700;
+  text-decoration: none;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.whatsapp-btn:hover {
+  transform: translateY(-1px);
+  opacity: 0.9;
 }
 
 .add-to-cart,
@@ -356,6 +480,76 @@ footer {
   text-align: center;
   color: var(--muted);
   padding: 16px 24px 40px;
+}
+
+.image-modal {
+  position: fixed;
+  inset: 0;
+  display: none;
+  z-index: 1200;
+}
+
+.image-modal.active {
+  display: block;
+}
+
+.image-modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(2, 6, 23, 0.88);
+}
+
+.image-modal-content {
+  position: relative;
+  width: min(82vw, 900px);
+  margin: 50px auto;
+  background: rgba(15, 23, 42, 0.96);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 28px;
+  padding: 24px;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5);
+}
+
+.image-modal-content img {
+  display: block;
+  width: 100%;
+  max-height: 80vh;
+  object-fit: contain;
+  border-radius: 18px;
+  background: #0b1220;
+}
+
+.image-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 50px;
+  height: 50px;
+  border: none;
+  border-radius: 50%;
+  background: rgba(15, 23, 42, 0.8);
+  color: #fff;
+  font-size: 2.4rem;
+  line-height: 1;
+  cursor: pointer;
+  z-index: 1;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+}
+
+.image-nav-left {
+  left: -20px;
+}
+
+.image-nav-right {
+  right: -20px;
+}
+
+.image-modal-close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 1;
+  font-size: 1.4rem;
 }
 
 .cart-overlay,
@@ -496,6 +690,15 @@ footer {
   border: none;
   padding: 14px 18px;
   margin-top: 12px;
+}
+
+.whatsapp-cart-btn {
+  background: #25D366;
+  color: #050816;
+}
+
+.whatsapp-cart-btn:hover {
+  opacity: 0.95;
 }
 
 .image-modal {

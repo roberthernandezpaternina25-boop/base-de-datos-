@@ -64,10 +64,11 @@
 
         <div class="category-filters" id="category-filters">
           <button class="filter-btn active" data-category="all" type="button">Todos</button>
-          <button class="filter-btn" data-category="women" type="button">Mujer</button>
-          <button class="filter-btn" data-category="men" type="button">Hombre</button>
-          <button class="filter-btn" data-category="accesorios" type="button">Accesorios</button>
+          <button class="filter-btn" data-category="men" type="button">Caballeros</button>
+          <button class="filter-btn" data-category="women" type="button">Damas</button>
         </div>
+
+        <div class="subcategory-filters" id="subcategory-filters" aria-label="Subcategorías"></div>
 
         <div id="product-list" class="product-grid"></div>
       </section>
@@ -83,7 +84,7 @@
       <section class="contact-section" id="contacto">
         <h3>¿Quieres una prenda personalizada?</h3>
         <p>Escríbenos y te ayudamos a encontrar el outfit perfecto.</p>
-        <a class="btn btn-primary" href="mailto:ventas@vertic7.com">ventas@vertic7.com</a>
+        <a class="btn btn-primary" href="mailto:contacto@vertic7.com">contacto@vertic7.com</a>
       </section>
     </main>
 
@@ -119,6 +120,16 @@
       </div>
     </div>
 
+    <div id="image-modal" class="image-modal" aria-hidden="true">
+      <div class="image-modal-backdrop" id="image-modal-backdrop"></div>
+      <div class="image-modal-content" role="dialog" aria-modal="true" aria-label="Vista ampliada de la imagen">
+        <button id="prev-image-btn" class="image-nav image-nav-left" type="button" aria-label="Imagen anterior">‹</button>
+        <button id="next-image-btn" class="image-nav image-nav-right" type="button" aria-label="Imagen siguiente">›</button>
+        <button id="close-image-modal" class="icon-button image-modal-close" type="button">✕</button>
+        <img id="expanded-image" src="" alt="Producto ampliado" />
+      </div>
+    </div>
+
     <div id="cart-overlay" class="cart-overlay"></div>
     <aside id="cart-panel" class="cart-panel" aria-label="Carrito de compras">
       <div class="cart-header">
@@ -143,6 +154,7 @@
         <button id="save-cart-btn" class="btn btn-secondary full-width" type="button">Guardar carrito</button>
         <p id="cart-save-message" class="cart-save-message"></p>
         <button id="checkout-btn" class="btn btn-primary full-width" type="button">Comprar ahora</button>
+        <a class="btn whatsapp-cart-btn full-width" href="https://wa.me/573218920417" target="_blank" rel="noreferrer noopener">Pedir por WhatsApp</a>
       </div>
     </aside>
 
