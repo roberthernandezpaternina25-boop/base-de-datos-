@@ -9,7 +9,11 @@ import { fileURLToPath } from "url";
 
 config();
 
-const JWT_SECRET = process.env.JWT_SECRET || "cambiar-este-secret";
+const JWT_SECRET = process.env.JWT_SECRET;
+if (!JWT_SECRET) {
+  throw new Error('JWT_SECRET no está definido. Configúralo en el entorno antes de iniciar la app.');
+}
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
@@ -29,7 +33,37 @@ const pool = new pg.Pool({
   }
 });
 
-// Crear tabla de usuarios si no existe
+pool.on('error', err => {
+  console.error('Error en cliente idle de PG:', err);
+});
+
+function normalizePositiveInteger(value) {
+  const num = Number(value);
+  return Number.isInteger(num) && num > 0 ? num : null;
+}
+
+function normalizeText(value, maxLength) {
+  if (typeof value !== 'string' && value !== undefined && value !== null) {
+    value = String(value);
+  }
+
+  if (typeof value !== 'string') {
+    return null;
+  }
+
+  const trimmed = value.trim();
+  if (!trimmed) {
+    return null;
+  }
+
+  if (trimmed.length > maxLength) {
+    return null;
+  }
+
+  return trimmed;
+}
+
+// Crear tabla de usuarios si no existe y completar columnas faltantes
 async function crearTablaUsuarios() {
   try {
     await pool.query(`
@@ -42,6 +76,13 @@ async function crearTablaUsuarios() {
         telefono VARCHAR(30) NOT NULL,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
       );
+    `);
+
+    await pool.query(`
+      ALTER TABLE users
+        ADD COLUMN IF NOT EXISTS password_hash TEXT,
+        ADD COLUMN IF NOT EXISTS telefono VARCHAR(30),
+        ADD COLUMN IF NOT EXISTS created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP;
     `);
 
     console.log("Tabla users lista");
@@ -61,6 +102,18 @@ async function crearTablaCarrito() {
         added_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         UNIQUE(user_id, product_id)
       );
+    `);
+
+    await pool.query(`
+      ALTER TABLE cart_items
+        ADD COLUMN IF NOT EXISTS product_id INTEGER,
+        ADD COLUMN IF NOT EXISTS quantity INTEGER DEFAULT 1,
+        ADD COLUMN IF NOT EXISTS added_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP;
+    `);
+
+    await pool.query(`
+      CREATE UNIQUE INDEX IF NOT EXISTS cart_items_user_id_product_id_idx
+      ON cart_items (user_id, product_id);
     `);
 
     console.log("Tabla cart_items lista");
@@ -92,11 +145,20 @@ app.post("/register", async (req, res) => {
       telefono
     } = req.body;
 
-    const safeEmail = email?.trim().toLowerCase();
+    const safeNombre = normalizeText(nombre, 100);
+    const safeApellido = normalizeText(apellido, 100);
+    const safeEmail = normalizeText(email, 255)?.toLowerCase();
+    const safeTelefono = normalizeText(telefono, 30);
 
-    if (!nombre || !apellido || !safeEmail || !password || !telefono) {
+    if (!safeNombre || !safeApellido || !safeEmail || !password || !safeTelefono) {
       return res.status(400).json({
-        error: "Todos los campos son obligatorios"
+        error: "Todos los campos son obligatorios y cumplen el formato válido"
+      });
+    }
+
+    if (typeof password !== 'string' || password.trim().length < 6) {
+      return res.status(400).json({
+        error: "La contraseña debe tener al menos 6 caracteres"
       });
     }
 
@@ -119,11 +181,11 @@ app.post("/register", async (req, res) => {
        VALUES ($1, $2, $3, $4, $5)
        RETURNING id, nombre, apellido, email, telefono, created_at`,
       [
-        nombre,
-        apellido,
+        safeNombre,
+        safeApellido,
         safeEmail,
         passwordHash,
-        telefono
+        safeTelefono
       ]
     );
 
@@ -266,31 +328,40 @@ app.get('/cart', authMiddleware, async (req, res) => {
 });
 
 app.post('/cart', authMiddleware, async (req, res) => {
+  let client = null;
+  let transactionStarted = false;
+
   try {
     const { productId, quantity, cart } = req.body;
 
     if (Array.isArray(cart)) {
-      const bulkItems = cart.map(item => ({
-        productId: Number(item.productId),
-        quantity: Number(item.quantity) || 1
-      })).filter(item => item.productId && item.quantity > 0);
+      const bulkItems = cart
+        .map(item => ({
+          productId: normalizePositiveInteger(item?.productId),
+          quantity: normalizePositiveInteger(item?.quantity) || 1
+        }))
+        .filter(item => item.productId !== null && item.quantity > 0);
 
-      await pool.query('BEGIN');
-      await pool.query('DELETE FROM cart_items WHERE user_id = $1', [req.user.id]);
+      client = await pool.connect();
+      transactionStarted = true;
+
+      await client.query('BEGIN');
+      await client.query('DELETE FROM cart_items WHERE user_id = $1', [req.user.id]);
 
       for (const item of bulkItems) {
-        await pool.query(
+        await client.query(
           `INSERT INTO cart_items (user_id, product_id, quantity)
            VALUES ($1, $2, $3)`,
           [req.user.id, item.productId, item.quantity]
         );
       }
 
-      await pool.query('COMMIT');
+      await client.query('COMMIT');
     } else {
-      const safeQuantity = Number(quantity) || 1;
+      const normalizedProductId = normalizePositiveInteger(productId);
+      const safeQuantity = normalizePositiveInteger(quantity) || 1;
 
-      if (!productId || safeQuantity < 1) {
+      if (!normalizedProductId || safeQuantity < 1) {
         return res.status(400).json({ error: 'Producto o cantidad inválida' });
       }
 
@@ -299,7 +370,7 @@ app.post('/cart', authMiddleware, async (req, res) => {
          VALUES ($1, $2, $3)
          ON CONFLICT (user_id, product_id) DO UPDATE
          SET quantity = cart_items.quantity + EXCLUDED.quantity`,
-        [req.user.id, productId, safeQuantity]
+        [req.user.id, normalizedProductId, safeQuantity]
       );
     }
 
@@ -310,24 +381,36 @@ app.post('/cart', authMiddleware, async (req, res) => {
 
     res.json({ cart: result.rows });
   } catch (error) {
-    await pool.query('ROLLBACK');
+    if (transactionStarted && client) {
+      try {
+        await client.query('ROLLBACK');
+      } catch (rollbackError) {
+        console.error('Error haciendo rollback del carrito:', rollbackError);
+      }
+    }
+
     console.error('Error guardando carrito:', error);
     res.status(500).json({ error: 'Error interno del servidor' });
+  } finally {
+    if (client) {
+      client.release();
+    }
   }
 });
 
 app.patch('/cart', authMiddleware, async (req, res) => {
   try {
     const { productId, quantity } = req.body;
-    const safeQuantity = Number(quantity);
+    const normalizedProductId = normalizePositiveInteger(productId);
+    const safeQuantity = normalizePositiveInteger(quantity);
 
-    if (!productId || safeQuantity < 1) {
+    if (!normalizedProductId || !safeQuantity || safeQuantity < 1) {
       return res.status(400).json({ error: 'Producto o cantidad inválida' });
     }
 
     await pool.query(
       'UPDATE cart_items SET quantity = $1 WHERE user_id = $2 AND product_id = $3',
-      [safeQuantity, req.user.id, productId]
+      [safeQuantity, req.user.id, normalizedProductId]
     );
 
     const result = await pool.query(
@@ -374,9 +457,18 @@ app.post('/logout', (req, res) => {
 
 const PORT = process.env.PORT || 3000;
 
-app.listen(PORT, async () => {
-  console.log(`Servidor funcionando en el puerto ${PORT}`);
+async function iniciarServidor() {
+  try {
+    await crearTablaUsuarios();
+    await crearTablaCarrito();
 
-  await crearTablaUsuarios();
-  await crearTablaCarrito();
-});
+    app.listen(PORT, () => {
+      console.log(`Servidor funcionando en el puerto ${PORT}`);
+    });
+  } catch (error) {
+    console.error('Error inicializando la base de datos:', error);
+    process.exit(1);
+  }
+}
+
+iniciarServidor();
