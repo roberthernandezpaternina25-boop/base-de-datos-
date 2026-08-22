@@ -50,16 +50,7 @@ function updateAddProductSubcategories() {
 }
 
 const products = [
-  {
-    id: 1,
-    gender: 'men',
-    subcategory: 'camisetas',
-    title: 'Camiseta Oversize',
-    price: 95,
-    originalPrice: 130,
-    description: 'calidad 1.1, gramaje 250.',
-    image: 'https://i.ibb.co/mC3Q7BBB/003.jpg'
-  },
+
   {
     id: 2,
     gender: 'men',
@@ -70,16 +61,7 @@ const products = [
     description: 'calidad 1.1, gramaje 250.',
     image: 'https://i.ibb.co/60s0v4Gf/007.jpg'
   },
-  {
-    id: 3,
-    gender: 'men',
-    subcategory: 'camisetas',
-    title: 'Camiseta Oversize Negra',
-    price: 95,
-    originalPrice: 130,
-    description: 'calidad 1.1, gramaje 250.',
-    image: 'https://i.ibb.co/spB1Sm1Z/002.jpg'
-  },
+  
   {
     id: 7,
     gender: 'men',
@@ -100,16 +82,6 @@ const products = [
     description: 'Tela suave, resistente y perfecta para combinar con cualquier outfit.',
     image: 'https://i.ibb.co/1fNhn2qh/004.jpg'
   },
-  {
-    id: 9,
-    gender: 'men',
-    subcategory: 'camisetas',
-    title: 'Camiseta Urbana',
-    price: 95,
-    originalPrice: 130,
-    description: 'Diseño urbano y moderno para destacar en cualquier ocasión.',
-    image: 'https://i.ibb.co/jvhwFbK9/006.jpg'
-  }
 ];
 
 let cart = [];

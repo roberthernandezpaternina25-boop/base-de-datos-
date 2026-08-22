@@ -323,7 +323,7 @@ h1 {
 }
 
 .hero-card::before {
-  content: "N°7";
+  content: "Vertic7";
   position: absolute;
   top: -16px;
   right: 26px;
