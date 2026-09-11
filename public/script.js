@@ -172,6 +172,14 @@ function getProductImages(product) {
   return [...new Set(imageList.map(sanitizeImageUrl).filter(Boolean))];
 }
 
+function getSubcategoryImages(product) {
+  const subcategoryImages = products
+    .filter(item => item.gender === product.gender && item.subcategory === product.subcategory)
+    .flatMap(getProductImages);
+
+  return [...new Set(subcategoryImages)];
+}
+
 function openImageModal(imageSrc, imageSet = [imageSrc]) {
   if (!imageModal || !expandedImage) return;
 
@@ -266,9 +274,11 @@ function renderProducts(list) {
   });
 
   document.querySelectorAll('.product-card .product-gallery').forEach(gallery => {
-    const imageSet = [...gallery.querySelectorAll('[data-image]')]
+    const productImageSet = [...gallery.querySelectorAll('[data-image]')]
       .map(element => element.dataset.image)
       .filter(Boolean);
+    const product = list.find(item => productImageSet.includes(getProductImages(item)[0]));
+    const imageSet = product ? getSubcategoryImages(product) : productImageSet;
 
     gallery.querySelectorAll('[data-image]').forEach(imageButton => {
       imageButton.addEventListener('click', () => {
