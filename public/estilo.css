@@ -9,7 +9,7 @@
 :root {
   color-scheme: dark;
 
-  --ink: #111113;
+  --ink: #1E201E;
   --ink-soft: #17171a;
   --panel: #1c1c20;
   --panel-soft: #232327;
@@ -546,6 +546,27 @@ main {
   font-family: var(--font-body);
 }
 
+.product-gallery {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 10px;
+  align-items: start;
+}
+
+.product-main-image,
+.product-thumbnail {
+  display: block;
+  padding: 0;
+  overflow: hidden;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+}
+
+.product-main-image {
+  width: 100%;
+}
+
 .product-card img {
   width: 100%;
   aspect-ratio: 4 / 3;
@@ -556,7 +577,22 @@ main {
   transition: transform 0.25s ease, border-color 0.25s ease;
 }
 
-.product-card img:hover {
+.product-thumbnails {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 64px;
+  max-height: 100%;
+  overflow-y: auto;
+}
+
+.product-thumbnail img {
+  aspect-ratio: 1;
+  object-fit: cover;
+}
+
+.product-main-image:hover img,
+.product-thumbnail:hover img {
   transform: scale(1.015);
   border-color: var(--accent);
 }
@@ -1154,7 +1190,7 @@ footer {
 
 .auth-message.error {
   background: rgba(255, 143, 122, 0.12);
-  color: #ff8f7a;
+  color: #4e4c4b;
 }
 
 /* ---------- responsive ---------- */

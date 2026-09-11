@@ -30,7 +30,8 @@ const subcategories = {
   all: [{ id: 'all', label: 'Ver todos' }],
   men: [
     { id: 'all', label: 'Ver todos' },
-    { id: 'camisetas', label: 'Camisetas' }
+    { id: 'camisetas', label: 'Camisetas' },
+    { id: 'pantalones', label: 'Pantalones' }
   ],
   women: [
     { id: 'all', label: 'Ver todos' },
@@ -51,37 +52,88 @@ function updateAddProductSubcategories() {
 
 const products = [
 
-  {
-    id: 2,
-    gender: 'men',
-    subcategory: 'camisetas',
-    title: 'Camiseta Street',
-    price: 95,
-    originalPrice: 130,
-    description: 'calidad 1.1, gramaje 250.',
-    image: 'https://i.ibb.co/60s0v4Gf/007.jpg'
-  },
   
   {
     id: 7,
     gender: 'men',
     subcategory: 'camisetas',
-    title: 'Camiseta Minimalista',
+    title: 'Camiseta oversized',
     price: 95,
     originalPrice: 130,
-    description: 'Diseño sobrio y cómodo para uso diario con estilo contemporáneo.',
-    image: 'https://i.ibb.co/8DDz6FqS/001.jpg'
+    description: 'algodón peruano de 380 gramos.',
+    image: 'https://i.ibb.co/8DDz6FqS/001.jpg',
+    images: [
+      'https://i.ibb.co/WNhdzt1c/799274692-1637381854717712-7111852111004397740-n.jpg'
+    ]
   },
   {
     id: 8,
     gender: 'men',
     subcategory: 'camisetas',
-    title: 'Camiseta Básica Premium',
+    title: 'camiseta oversized',
     price: 95,
     originalPrice: 130,
-    description: 'Tela suave, resistente y perfecta para combinar con cualquier outfit.',
-    image: 'https://i.ibb.co/1fNhn2qh/004.jpg'
+    description: 'algodón de 280 gramos.',
+    image: 'https://i.ibb.co/1fNhn2qh/004.jpg',
+    images: [
+      'https://i.ibb.co/mFhHGMMw/798743393-1389075309870774-2475258463961380947-n.jpg'
+    ]
   },
+  {
+    id: 9,
+    gender: 'men',
+    subcategory: 'camisetas',
+    title: 'Camiseta oversize',
+    price: 95,
+    originalPrice: 130,
+    description: 'algodón de 280 gramos.',
+    image: 'https://i.ibb.co/b5K9rCRn/790491148-1070161185594037-3353032358359072976-n-1.jpg',
+    images: [
+      'https://i.ibb.co/VW3yyh70/IMG-0874.jpg',
+      'https://i.ibb.co/39ngmWCj/798539383-1016914161393512-3543803847587127013-n.jpg',
+       'https://i.ibb.co/bMCZCGWc/IMG-0870.jpg'
+    ]
+  },
+  {
+    id: 10,
+    gender: 'men',
+    subcategory: 'pantalones',
+    title: 'baggy oversize',
+    price: 125,
+    originalPrice: 150,
+    description: 'Tela jeans semilicrado, estilo baggy bota ancha .',
+    image: 'https://i.ibb.co/HLf8Rxtq/1.jpg',
+     
+  },
+  {id: 11,
+    gender: 'men',
+    subcategory: 'pantalones',
+    title: 'baggy oversize',
+    price: 125,
+    originalPrice: 150,
+    description: 'Tela jeans semilicrado, estilo baggy bota ancha .',
+    image: 'https://i.ibb.co/8nJtbCZM/2.jpg',
+  },
+
+  {id: 12,
+    gender: 'men',
+    subcategory: 'pantalones',
+    title: 'baggy oversize',
+    price: 125,
+    originalPrice: 150,
+    description: 'Tela jeans semilicrado, estilo baggy bota ancha .',
+    image: 'https://i.ibb.co/GQzX1kMJ/e44bdb40-e5cc-4a55-9f75-101bbb713b94.jpg',
+  },
+  
+  {id: 14,
+    gender: 'men',
+    subcategory: 'pantalones',
+    title: 'baggy oversize',
+    price: 125,
+    originalPrice: 150,
+    description: 'Tela jeans semilicrado, estilo baggy bota ancha .',
+    image: 'https://i.ibb.co/WpdQXFtV/6fac1f45-bbbd-4877-afe3-a57d228137be.jpg',
+  }
 ];
 
 let cart = [];
@@ -115,10 +167,15 @@ function formatPrice(value) {
 let currentImageIndex = 0;
 let currentImageSet = [];
 
-function openImageModal(imageSrc) {
+function getProductImages(product) {
+  const imageList = [product.image, ...(Array.isArray(product.images) ? product.images : [])];
+  return [...new Set(imageList.map(sanitizeImageUrl).filter(Boolean))];
+}
+
+function openImageModal(imageSrc, imageSet = [imageSrc]) {
   if (!imageModal || !expandedImage) return;
 
-  currentImageSet = products.filter(product => product.image).map(product => product.image);
+  currentImageSet = imageSet;
   currentImageIndex = currentImageSet.indexOf(imageSrc);
 
   if (currentImageIndex < 0) {
@@ -165,13 +222,24 @@ function renderProducts(list) {
     const safeTitle = escapeHtml(product.title ?? '');
     const safeDescription = escapeHtml(product.description ?? '');
     const safeSubcategory = escapeHtml(product.subcategory ?? '');
-    const safeImage = sanitizeImageUrl(product.image);
+    const productImages = getProductImages(product);
+    const safeImage = productImages[0] || '';
     const whatsappText = encodeURIComponent(`Hola, quiero hacer un pedido de ${safeTitle}`);
     const whatsappUrl = `https://wa.me/573218920417?text=${whatsappText}`;
+    const thumbnails = productImages.slice(1).map((image, index) => `
+      <button class="product-thumbnail" type="button" data-image="${image}" aria-label="Ver imagen ${index + 2} de ${safeTitle}">
+        <img src="${image}" alt="${safeTitle}, vista ${index + 2}" loading="lazy" />
+      </button>
+    `).join('');
 
     return `
     <article class="product-card">
-      <img src="${safeImage}" alt="${safeTitle}" loading="lazy" data-image="${safeImage}" />
+      <div class="product-gallery">
+        <button class="product-main-image" type="button" data-image="${safeImage}" aria-label="Ver imagen ampliada de ${safeTitle}">
+          <img src="${safeImage}" alt="${safeTitle}" loading="lazy" />
+        </button>
+        ${thumbnails ? `<div class="product-thumbnails">${thumbnails}</div>` : ''}
+      </div>
       <div>
         <h3>${safeTitle}</h3>
         <p>${safeDescription}</p>
@@ -197,9 +265,15 @@ function renderProducts(list) {
     });
   });
 
-  document.querySelectorAll('.product-card img').forEach(img => {
-    img.addEventListener('click', () => {
-      openImageModal(img.dataset.image);
+  document.querySelectorAll('.product-card .product-gallery').forEach(gallery => {
+    const imageSet = [...gallery.querySelectorAll('[data-image]')]
+      .map(element => element.dataset.image)
+      .filter(Boolean);
+
+    gallery.querySelectorAll('[data-image]').forEach(imageButton => {
+      imageButton.addEventListener('click', () => {
+        openImageModal(imageButton.dataset.image, imageSet);
+      });
     });
   });
 }
@@ -567,6 +641,10 @@ if (addProductForm) {
     const gender = sanitizeText(formData.get('gender'));
     const subcategory = sanitizeText(formData.get('subcategory'));
     const image = sanitizeImageUrl(formData.get('image'));
+    const additionalImages = String(formData.get('additionalImages') || '')
+      .split(/[\n,]+/)
+      .map(sanitizeImageUrl)
+      .filter(Boolean);
 
     if (!title || !description || !image || Number.isNaN(price) || price <= 0 || !['men', 'women'].includes(gender)) {
       return;
@@ -584,7 +662,8 @@ if (addProductForm) {
       price,
       originalPrice,
       description: description.slice(0, 250),
-      image
+      image,
+      images: additionalImages
     };
 
     products.push(newProduct);
