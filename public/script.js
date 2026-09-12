@@ -36,7 +36,7 @@ const subcategories = {
   women: [
     { id: 'all', label: 'Ver todos' },
     { id: 'camisetas', label: 'Camisetas' },
-    { id: 'jeans', label: 'Jeans' }
+    { id: 'pantalones', label: 'Pantalones' }
   ]
 };
 
@@ -133,7 +133,53 @@ const products = [
     originalPrice: 150,
     description: 'Tela jeans semilicrado, estilo baggy bota ancha .',
     image: 'https://i.ibb.co/WpdQXFtV/6fac1f45-bbbd-4877-afe3-a57d228137be.jpg',
+  },
+  {id: 15,
+    gender: 'men',
+    subcategory: 'pantalones',
+    title: 'baggy oversize',
+    price: 125,
+    originalPrice: 150,
+    description: 'Denim rigido de ecelente calidad, Bordado lateral en alto relieve .',
+    image: 'https://i.ibb.co/vCsjt1Yy/47756f5f-2e91-4f2b-ad62-2969fc240da6.jpg',
+  },
+  {id: 16,
+    gender: 'men',
+    subcategory: 'pantalones',
+    title: 'baggy oversize',
+    price: 125,
+    originalPrice: 150,
+    description: 'Denim rigido de ecelente calidad, Bordado lateral en alto relieve .',
+    image: 'https://i.ibb.co/ycPbFs0w/Whats-App-Image-2026-09-11-at-6-11-08-AM.jpg',
+  },
+  {id: 17,
+    gender: 'women',
+    subcategory: 'pantalones',
+    title: 'Palazzos importados',
+    price: 125,
+    originalPrice: 150,
+    description: 'Rigido y stretch.',
+    image: 'https://i.ibb.co/W4mQWvQW/Whats-App-Image-2026-09-11-at-6-14-32-AM.jpg',
+  },
+  {id: 18,
+    gender: 'women',
+    subcategory: 'pantalones',
+    title: 'palazzos importados',
+    price: 125,
+    originalPrice: 150,
+    description: 'Rigido y stretch.',
+    image: 'https://i.ibb.co/WpYNwGYn/Whats-App-Image-2026-09-11-at-6-14-33-AM.jpg',
+  },
+  {id: 19,
+    gender: 'women',
+    subcategory: 'pantalones',
+    title: 'palazzos importados',
+    price: 125,
+    originalPrice: 150,
+    description: 'Rigido y stretch.',
+    image: 'https://i.ibb.co/21Z43DqP/Whats-App-Image-2026-09-11-at-6-14-33.jpg',
   }
+
 ];
 
 let cart = [];
@@ -303,7 +349,7 @@ function getFilteredProducts() {
 function renderSubcategoryButtons() {
   subcategoryFilters.innerHTML = '';
 
-  if (currentCategory === 'all' || currentCategory === 'women') {
+  if (currentCategory === 'all') {
     return;
   }
 
