@@ -22,9 +22,10 @@ const closeImageModalButton = document.getElementById('close-image-modal');
 const imageModalBackdrop = document.getElementById('image-modal-backdrop');
 const prevImageButton = document.getElementById('prev-image-btn');
 const nextImageButton = document.getElementById('next-image-btn');
+const goToMainImageButton = document.getElementById('go-to-main-image');
 
-let currentCategory = 'men';
-let currentSubcategory = 'camisetas';
+let currentCategory = 'all';
+let currentSubcategory = 'all';
 
 const subcategories = {
   all: [{ id: 'all', label: 'Ver todos' }],
@@ -178,7 +179,53 @@ const products = [
     originalPrice: 150,
     description: 'Rigido y stretch.',
     image: 'https://i.ibb.co/21Z43DqP/Whats-App-Image-2026-09-11-at-6-14-33.jpg',
+  },
+  {id: 20,
+    gender: 'women',
+    subcategory: 'pantalones',
+    title: 'jeasns ',
+    price: 110,
+    originalPrice: 140,
+    description: 'jeans marca most wanted.',
+    image: 'https://i.ibb.co/pB5HYsLb/Image-2026-09-13-at-8-44-35-AM.jpg',
+  },
+  {id: 21,
+    gender: 'women',
+    subcategory: 'pantalones',
+    title: 'jeans ',
+    price: 110,
+    originalPrice: 140,
+    description: 'jeans marca popsugar.',
+    image: 'https://i.ibb.co/MxwgTHZV/jeans2.jpg',
+  },
+  {id: 22,
+    gender: 'women',
+    subcategory: 'pantalones',
+    title: 'jeans ',
+    price : 110,
+    originalPrice: 140,
+    description: 'jenas de la marca popsugar.',
+    image: 'https://i.ibb.co/s9sVTCwj/jeans3.jpg',
+  },
+  {id: 23,
+    gender: 'women',
+    subcategory: 'pantalones',
+    title: 'jeans ',
+    price: 110,
+    originalPrice: 140,
+    description: 'jeans marca wost wanted.',
+    image: 'https://i.ibb.co/N6rV8qtx/jenas1.jpg',
+  },
+  {id: 24,
+    gender: 'women',
+    subcategory: 'pantalones',
+    title: 'jeans ',
+    price: 110,
+    originalPrice: 140,
+    description: 'jeans marca wost wanted.',
+    image: 'https://i.ibb.co/Kpx1Zjc3/jeans5.jpg',
   }
+
 
 ];
 
@@ -212,6 +259,7 @@ function formatPrice(value) {
 
 let currentImageIndex = 0;
 let currentImageSet = [];
+let currentMainImageButton = null;
 
 function getProductImages(product) {
   const imageList = [product.image, ...(Array.isArray(product.images) ? product.images : [])];
@@ -226,7 +274,7 @@ function getSubcategoryImages(product) {
   return [...new Set(subcategoryImages)];
 }
 
-function openImageModal(imageSrc, imageSet = [imageSrc]) {
+function openImageModal(imageSrc, imageSet = [imageSrc], mainImageButton = null) {
   if (!imageModal || !expandedImage) return;
 
   currentImageSet = imageSet;
@@ -237,6 +285,7 @@ function openImageModal(imageSrc, imageSet = [imageSrc]) {
   }
 
   expandedImage.src = imageSrc;
+  currentMainImageButton = mainImageButton;
   imageModal.classList.add('active');
   imageModal.setAttribute('aria-hidden', 'false');
 }
@@ -255,6 +304,16 @@ function closeImageModal() {
   expandedImage.src = '';
   currentImageIndex = 0;
   currentImageSet = [];
+  currentMainImageButton = null;
+}
+
+function goToMainImage() {
+  if (!currentMainImageButton) return;
+
+  const mainImageButton = currentMainImageButton;
+  closeImageModal();
+  mainImageButton.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  mainImageButton.focus({ preventScroll: true });
 }
 
 function renderProducts(list) {
@@ -328,7 +387,7 @@ function renderProducts(list) {
 
     gallery.querySelectorAll('[data-image]').forEach(imageButton => {
       imageButton.addEventListener('click', () => {
-        openImageModal(imageButton.dataset.image, imageSet);
+        openImageModal(imageButton.dataset.image, imageSet, gallery.querySelector('.product-main-image'));
       });
     });
   });
@@ -658,6 +717,9 @@ if (prevImageButton) {
 }
 if (nextImageButton) {
   nextImageButton.addEventListener('click', () => showNextImage(1));
+}
+if (goToMainImageButton) {
+  goToMainImageButton.addEventListener('click', goToMainImage);
 }
 document.addEventListener('keydown', event => {
   if (!imageModal || !imageModal.classList.contains('active')) return;

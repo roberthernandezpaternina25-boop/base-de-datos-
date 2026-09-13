@@ -824,6 +824,11 @@ footer {
   background: var(--ink);
 }
 
+.image-main-link {
+  width: 100%;
+  margin-top: 14px;
+}
+
 .image-nav {
   position: absolute;
   top: 50%;
