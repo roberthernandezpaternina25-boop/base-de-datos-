@@ -7,24 +7,24 @@
    ============================================================ */
 
 :root {
-  color-scheme: dark;
+  color-scheme: light;
 
-  --ink: #1E201E;
-  --ink-soft: #17171a;
-  --panel: #1c1c20;
-  --panel-soft: #232327;
-  --line: rgba(244, 241, 234, 0.14);
-  --line-strong: rgba(244, 241, 234, 0.26);
+  --ink: #e2e6e2;
+  --ink-soft: #ffffff;
+  --panel: #ffffff;
+  --panel-soft: #eef1ef;
+  --line: rgba(35, 40, 38, 0.12);
+  --line-strong: rgba(35, 40, 38, 0.24);
 
-  --text: #f3f1ea;
-  --muted: #9c9a95;
+  --text: #090909;
+  --muted: #080808;
 
   --accent: #478DA9;
   --accent-soft: rgba(71, 141, 169, 0.16);
-  --accent-ink: #071217;
+  --accent-ink: #081419;
   --tape: #68747A;
 
-  --white: #fff;
+  --white: #202523;
 
   --radius-s: 6px;
   --radius-m: 14px;
@@ -503,7 +503,7 @@ main {
 }
 
 .form-row input::placeholder {
-  color: rgba(243, 241, 234, 0.4);
+  color: rgba(36, 41, 39, 0.48);
 }
 
 .filter-btn {
