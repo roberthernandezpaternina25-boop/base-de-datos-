@@ -457,7 +457,6 @@ function formatPrice(value) {
 
 let currentImageIndex = 0;
 let currentImageSet = [];
-let currentMainImageButton = null;
 
 function getProductImages(product) {
   const imageList = [product.image, ...(Array.isArray(product.images) ? product.images : [])];
@@ -472,7 +471,7 @@ function getSubcategoryImages(product) {
   return [...new Set(subcategoryImages)];
 }
 
-function openImageModal(imageSrc, imageSet = [imageSrc], mainImageButton = null) {
+function openImageModal(imageSrc, imageSet = [imageSrc]) {
   if (!imageModal || !expandedImage) return;
 
   currentImageSet = imageSet;
@@ -483,7 +482,6 @@ function openImageModal(imageSrc, imageSet = [imageSrc], mainImageButton = null)
   }
 
   expandedImage.src = imageSrc;
-  currentMainImageButton = mainImageButton;
   imageModal.classList.add('active');
   imageModal.setAttribute('aria-hidden', 'false');
 }
@@ -502,34 +500,38 @@ function closeImageModal() {
   expandedImage.src = '';
   currentImageIndex = 0;
   currentImageSet = [];
-  currentMainImageButton = null;
 }
 
 function goToMainImage() {
-  if (!currentMainImageButton) return;
+  const expandedImageSrc = currentImageSet[currentImageIndex] || expandedImage.src;
+  const product = products.find(item => getProductImages(item).includes(expandedImageSrc));
+  if (!product) return;
 
-  const mainImageButton = currentMainImageButton;
+  let mainImageButton = document.querySelector(
+    `.product-main-image[data-product-id="${product.id}"]`
+  );
+
   closeImageModal();
+
+  if (!mainImageButton) {
+    currentCategory = product.gender;
+    currentSubcategory = product.subcategory;
+    updateCategoryButtons(currentCategory);
+    renderSubcategoryButtons();
+    renderProducts(getFilteredProducts());
+    mainImageButton = document.querySelector(
+      `.product-main-image[data-product-id="${product.id}"]`
+    );
+  }
+
+  if (!mainImageButton) return;
+
   mainImageButton.scrollIntoView({ behavior: 'smooth', block: 'center' });
   mainImageButton.focus({ preventScroll: true });
 }
 
-function renderProducts(list) {
-  if (currentCategory === 'women' && (!list || list.length === 0)) {
-    productList.innerHTML = `
-      <article class="product-card product-card-empty">
-        <div class="product-empty-state">
-          <div>
-            <h3>Próximamente</h3>
-            <p>Estamos preparando la colección para damas.</p>
-          </div>
-        </div>
-      </article>
-    `;
-    return;
-  }
-
-  productList.innerHTML = list.map(product => {
+function renderProductCards(list) {
+  return list.map(product => {
     const safeTitle = escapeHtml(product.title ?? '');
     const safeDescription = escapeHtml(product.description ?? '');
     const safeSubcategory = escapeHtml(product.subcategory ?? '');
@@ -546,7 +548,7 @@ function renderProducts(list) {
     return `
     <article class="product-card">
       <div class="product-gallery">
-        <button class="product-main-image" type="button" data-image="${safeImage}" aria-label="Ver imagen ampliada de ${safeTitle}">
+        <button class="product-main-image" type="button" data-image="${safeImage}" data-product-id="${product.id}" aria-label="Ver imagen ampliada de ${safeTitle}">
           <img src="${safeImage}" alt="${safeTitle}" loading="lazy" />
         </button>
         ${thumbnails ? `<div class="product-thumbnails">${thumbnails}</div>` : ''}
@@ -569,7 +571,9 @@ function renderProducts(list) {
     </article>
   `;
   }).join('');
+}
 
+function bindProductEvents(list) {
   document.querySelectorAll('.add-to-cart').forEach(button => {
     button.addEventListener('click', () => {
       addToCart(Number(button.dataset.id));
@@ -585,8 +589,66 @@ function renderProducts(list) {
 
     gallery.querySelectorAll('[data-image]').forEach(imageButton => {
       imageButton.addEventListener('click', () => {
-        openImageModal(imageButton.dataset.image, imageSet, gallery.querySelector('.product-main-image'));
+        openImageModal(imageButton.dataset.image, imageSet);
       });
+    });
+  });
+}
+
+function renderProducts(list) {
+  if (currentCategory === 'women' && (!list || list.length === 0)) {
+    productList.innerHTML = `
+      <article class="product-card product-card-empty">
+        <div class="product-empty-state">
+          <div>
+            <h3>Próximamente</h3>
+            <p>Estamos preparando la colección para damas.</p>
+          </div>
+        </div>
+      </article>
+    `;
+    return;
+  }
+
+  productList.innerHTML = renderProductCards(list);
+  bindProductEvents(list);
+}
+
+function renderInitialProducts() {
+  const groups = [...new Map(products.map(product => [
+    `${product.gender}-${product.subcategory}`,
+    products.filter(item => item.gender === product.gender && item.subcategory === product.subcategory)
+  ])).values()];
+
+  productList.innerHTML = groups.map(group => {
+    const firstProduct = group[0];
+    const categoryLabel = firstProduct.gender === 'men' ? 'Caballeros' : 'Damas';
+    const subcategoryLabel = firstProduct.subcategory.charAt(0).toUpperCase() + firstProduct.subcategory.slice(1);
+    const previewProducts = group.slice(0, 3);
+
+    return `
+      <section class="product-category-group">
+        <div class="product-category-heading">
+          <div>
+            <p class="eyebrow">${categoryLabel}</p>
+            <h3>${escapeHtml(subcategoryLabel)}</h3>
+          </div>
+          <button class="btn btn-secondary similar-products-btn" type="button" data-category="${firstProduct.gender}" data-subcategory="${firstProduct.subcategory}">Ver productos similares</button>
+        </div>
+        <div class="product-grid product-preview-grid">${renderProductCards(previewProducts)}</div>
+      </section>
+    `;
+  }).join('');
+
+  bindProductEvents(products);
+  document.querySelectorAll('.similar-products-btn').forEach(button => {
+    button.addEventListener('click', () => {
+      currentCategory = button.dataset.category;
+      currentSubcategory = button.dataset.subcategory;
+      updateCategoryButtons(currentCategory);
+      renderSubcategoryButtons();
+      renderProducts(getFilteredProducts());
+      productList.scrollIntoView({ behavior: 'smooth', block: 'start' });
     });
   });
 }
@@ -995,4 +1057,4 @@ if (productCategorySelect) {
 
 updateAddProductSubcategories();
 renderSubcategoryButtons();
-renderProducts(getFilteredProducts());
+renderInitialProducts();

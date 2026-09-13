@@ -416,6 +416,37 @@ main {
   gap: 22px;
 }
 
+.product-category-group {
+  grid-column: 1 / -1;
+}
+
+.product-category-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  gap: 18px;
+  margin: 8px 0 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--line);
+}
+
+.product-category-heading .eyebrow {
+  margin: 0 0 6px;
+}
+
+.product-category-heading h3 {
+  font-size: 1.35rem;
+}
+
+.product-preview-grid {
+  margin-bottom: 34px;
+}
+
+.similar-products-btn {
+  flex-shrink: 0;
+  padding: 10px 16px;
+}
+
 .category-filters,
 .subcategory-filters {
   display: flex;
