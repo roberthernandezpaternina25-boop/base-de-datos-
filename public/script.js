@@ -582,6 +582,19 @@ function formatPrice(value) {
   return Number(value).toFixed(3);
 }
 
+function getProductReference(product) {
+  return product.reference || `V7-${String(product.id).padStart(3, '0')}`;
+}
+
+function getWhatsAppProductLabel(product) {
+  const labels = {
+    camisetas: 'camiseta',
+    pantalones: 'pantalón'
+  };
+
+  return labels[product.subcategory] || 'producto';
+}
+
 let currentImageIndex = 0;
 let currentImageSet = [];
 
@@ -664,7 +677,12 @@ function renderProductCards(list) {
     const safeSubcategory = escapeHtml(product.subcategory ?? '');
     const productImages = getProductImages(product);
     const safeImage = productImages[0] || '';
-    const whatsappText = encodeURIComponent(`Hola, quiero hacer un pedido de ${safeTitle}`);
+    const productReference = getProductReference(product);
+    const safeProductReference = escapeHtml(productReference);
+    const whatsappProductLabel = getWhatsAppProductLabel(product);
+    const whatsappText = encodeURIComponent(
+      `Hola, quiero realizar un pedido de la ${whatsappProductLabel} ${productReference}.`
+    );
     const whatsappUrl = `https://wa.me/573218920417?text=${whatsappText}`;
     const thumbnails = productImages.slice(1).map((image, index) => `
       <button class="product-thumbnail" type="button" data-image="${image}" aria-label="Ver imagen ${index + 2} de ${safeTitle}">
@@ -683,7 +701,10 @@ function renderProductCards(list) {
       <div>
         <h3>${safeTitle}</h3>
         <p>${safeDescription}</p>
-        <span class="product-tag">${safeSubcategory}</span>
+        <div class="product-meta">
+          <span class="product-tag">${safeSubcategory}</span>
+          <span class="product-reference">Ref: ${safeProductReference}</span>
+        </div>
       </div>
       <div class="product-footer">
         <div class="price-group">
