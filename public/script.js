@@ -23,6 +23,7 @@ const imageModalBackdrop = document.getElementById('image-modal-backdrop');
 const prevImageButton = document.getElementById('prev-image-btn');
 const nextImageButton = document.getElementById('next-image-btn');
 const goToMainImageButton = document.getElementById('go-to-main-image');
+const similarProductsUrl = 'https://drive.google.com/drive/folders/1mJjy039jTaOlMP7eDhU17VIMxUVP9NS6?usp=drive_link';
 
 let currentCategory = 'all';
 let currentSubcategory = 'all';
@@ -770,6 +771,10 @@ function renderProductCards(list) {
           <img src="${safeImage}" alt="${safeTitle}" loading="lazy" />
         </button>
         ${thumbnails ? `<div class="product-thumbnails">${thumbnails}</div>` : ''}
+        <a class="similar-products-link" href="${similarProductsUrl}" target="_blank" rel="noopener noreferrer">
+          <img src="https://www.gstatic.com/images/branding/product/1x/drive_2020q4_32dp.png" alt="" />
+          <span>Encuentra productos similares</span>
+        </a>
       </div>
       <div>
         <h3>${safeTitle}</h3>

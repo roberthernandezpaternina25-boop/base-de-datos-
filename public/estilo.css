@@ -598,6 +598,39 @@ main {
   width: 100%;
 }
 
+.similar-products-link {
+  grid-column: 1 / -1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  min-height: 42px;
+  padding: 8px 12px;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-s);
+  color: var(--text);
+  font-size: 0.82rem;
+  font-weight: 700;
+  text-align: center;
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.similar-products-link:hover {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+}
+
+.product-card .similar-products-link img {
+  flex: 0 0 22px;
+  width: 22px;
+  height: 22px;
+  aspect-ratio: 1;
+  object-fit: contain;
+  border: 0;
+  border-radius: 0;
+  cursor: inherit;
+}
+
 .product-card img {
   width: 100%;
   aspect-ratio: 4 / 3;
