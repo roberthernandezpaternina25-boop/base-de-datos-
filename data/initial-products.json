@@ -1,0 +1,620 @@
+[
+  {
+    "id": 7,
+    "gender": "men",
+    "subcategory": "camisetas",
+    "title": "Camiseta oversized",
+    "price": 95,
+    "originalPrice": 130,
+    "description": "algodón peruano de 380 gramos.",
+    "image": "https://i.ibb.co/8DDz6FqS/001.jpg",
+    "images": [
+      "https://i.ibb.co/WNhdzt1c/799274692-1637381854717712-7111852111004397740-n.jpg"
+    ]
+  },
+  {
+    "id": 8,
+    "gender": "men",
+    "subcategory": "camisetas",
+    "title": "camiseta oversized",
+    "price": 95,
+    "originalPrice": 130,
+    "description": "algodón de 280 gramos.",
+    "image": "https://i.ibb.co/1fNhn2qh/004.jpg",
+    "images": [
+      "https://i.ibb.co/mFhHGMMw/798743393-1389075309870774-2475258463961380947-n.jpg"
+    ]
+  },
+  {
+    "id": 9,
+    "gender": "men",
+    "subcategory": "camisetas",
+    "title": "Camiseta oversize",
+    "price": 95,
+    "originalPrice": 130,
+    "description": "algodón de 280 gramos.",
+    "image": "https://i.ibb.co/b5K9rCRn/790491148-1070161185594037-3353032358359072976-n-1.jpg",
+    "images": [
+      "https://i.ibb.co/VW3yyh70/IMG-0874.jpg",
+      "https://i.ibb.co/39ngmWCj/798539383-1016914161393512-3543803847587127013-n.jpg",
+      "https://i.ibb.co/bMCZCGWc/IMG-0870.jpg"
+    ]
+  },
+  {
+    "id": 10,
+    "gender": "men",
+    "subcategory": "pantalones",
+    "title": "baggy oversize",
+    "price": 125,
+    "originalPrice": 150,
+    "description": "Tela jeans semilicrado, estilo baggy bota ancha .",
+    "image": "https://i.ibb.co/HLf8Rxtq/1.jpg"
+  },
+  {
+    "id": 11,
+    "gender": "men",
+    "subcategory": "pantalones",
+    "title": "baggy oversize",
+    "price": 125,
+    "originalPrice": 150,
+    "description": "Tela jeans semilicrado, estilo baggy bota ancha .",
+    "image": "https://i.ibb.co/8nJtbCZM/2.jpg"
+  },
+  {
+    "id": 12,
+    "gender": "men",
+    "subcategory": "pantalones",
+    "title": "baggy oversize",
+    "price": 125,
+    "originalPrice": 150,
+    "description": "Tela jeans semilicrado, estilo baggy bota ancha .",
+    "image": "https://i.ibb.co/GQzX1kMJ/e44bdb40-e5cc-4a55-9f75-101bbb713b94.jpg"
+  },
+  {
+    "id": 14,
+    "gender": "men",
+    "subcategory": "pantalones",
+    "title": "baggy oversize",
+    "price": 125,
+    "originalPrice": 150,
+    "description": "Tela jeans semilicrado, estilo baggy bota ancha .",
+    "image": "https://i.ibb.co/WpdQXFtV/6fac1f45-bbbd-4877-afe3-a57d228137be.jpg"
+  },
+  {
+    "id": 15,
+    "gender": "men",
+    "subcategory": "pantalones",
+    "title": "baggy oversize",
+    "price": 125,
+    "originalPrice": 150,
+    "description": "Denim rigido de ecelente calidad, Bordado lateral en alto relieve .",
+    "image": "https://res.cloudinary.com/bzvole48/image/upload/v1789325164/47756f5f-2e91-4f2b-ad62-2969fc240da6.jpg"
+  },
+  {
+    "id": 16,
+    "gender": "men",
+    "subcategory": "pantalones",
+    "title": "baggy oversize",
+    "price": 125,
+    "originalPrice": 150,
+    "description": "Denim rigido de ecelente calidad, Bordado lateral en alto relieve .",
+    "image": "https://i.ibb.co/ycPbFs0w/Whats-App-Image-2026-09-11-at-6-11-08-AM.jpg"
+  },
+  {
+    "id": 17,
+    "gender": "women",
+    "subcategory": "pantalones",
+    "title": "jeans",
+    "price": 125,
+    "originalPrice": 150,
+    "description": "jeans licrado con faja, contros de abdomen.",
+    "image": "https://res.cloudinary.com/bzvole48/image/upload/v1789599592/cb72e570-3fdd-4cad-aa57-1affd9b60842.jpg"
+  },
+  {
+    "id": 18,
+    "gender": "women",
+    "subcategory": "pantalones",
+    "title": "jeans",
+    "price": 125,
+    "originalPrice": 150,
+    "description": "jeans licrado con faja, contros de abdomen.",
+    "image": "https://res.cloudinary.com/bzvole48/image/upload/v1789599591/a5020aff-e83b-4537-b8f8-a88762cac7fb.jpg"
+  },
+  {
+    "id": 19,
+    "gender": "women",
+    "subcategory": "pantalones",
+    "title": "jeans",
+    "price": 120,
+    "originalPrice": 150,
+    "description": "jeans kabala skinny.",
+    "image": "https://res.cloudinary.com/bzvole48/image/upload/v1789599905/1.jpg"
+  },
+  {
+    "id": 20,
+    "gender": "women",
+    "subcategory": "pantalones",
+    "title": "jeans ",
+    "price": 110,
+    "originalPrice": 140,
+    "description": "jeans marca most wanted.",
+    "image": "https://i.ibb.co/pB5HYsLb/Image-2026-09-13-at-8-44-35-AM.jpg"
+  },
+  {
+    "id": 21,
+    "gender": "women",
+    "subcategory": "pantalones",
+    "title": "jeans ",
+    "price": 110,
+    "originalPrice": 140,
+    "description": "jeans marca popsugar.",
+    "image": "https://i.ibb.co/MxwgTHZV/jeans2.jpg"
+  },
+  {
+    "id": 22,
+    "gender": "women",
+    "subcategory": "pantalones",
+    "title": "jeans ",
+    "price": 110,
+    "originalPrice": 140,
+    "description": "jenas de la marca popsugar.",
+    "image": "https://i.ibb.co/s9sVTCwj/jeans3.jpg"
+  },
+  {
+    "id": 23,
+    "gender": "women",
+    "subcategory": "pantalones",
+    "title": "jeans ",
+    "price": 110,
+    "originalPrice": 140,
+    "description": "jeans marca wost wanted.",
+    "image": "https://i.ibb.co/N6rV8qtx/jenas1.jpg"
+  },
+  {
+    "id": 24,
+    "gender": "women",
+    "subcategory": "pantalones",
+    "title": "jeans ",
+    "price": 110,
+    "originalPrice": 140,
+    "description": "jeans marca wost wanted.",
+    "image": "https://i.ibb.co/Kpx1Zjc3/jeans5.jpg"
+  },
+  {
+    "id": 25,
+    "gender": "men",
+    "subcategory": "pantalones",
+    "title": "jeans ",
+    "price": 133,
+    "originalPrice": 155,
+    "description": "jeans caballeros.",
+    "image": "https://res.cloudinary.com/bzvole48/image/upload/v1789328413/f7baf340-d6f4-4c0c-9a31-95c19b0e91b3.jpg"
+  },
+  {
+    "id": 26,
+    "gender": "men",
+    "subcategory": "pantalones",
+    "title": "jeans ",
+    "price": 133,
+    "originalPrice": 155,
+    "description": "jeans caballeros.",
+    "image": "https://res.cloudinary.com/bzvole48/image/upload/v1789328412/e37b5c07-bbbf-4621-9499-8694958c558c.jpg"
+  },
+  {
+    "id": 27,
+    "gender": "men",
+    "subcategory": "pantalones",
+    "title": "jeans ",
+    "price": 133,
+    "originalPrice": 155,
+    "description": "jeans caballeros.",
+    "image": "https://res.cloudinary.com/bzvole48/image/upload/v1789328409/e25c449f-a4c8-4ca6-958e-7312b504cf27.jpg"
+  },
+  {
+    "id": 28,
+    "gender": "men",
+    "subcategory": "pantalones",
+    "title": "jeans ",
+    "price": 133,
+    "originalPrice": 155,
+    "description": "jeans caballeros.",
+    "image": "https://res.cloudinary.com/bzvole48/image/upload/v1789328405/d1b339af-3344-4976-9c16-060bb6dda9a3.jpg"
+  },
+  {
+    "id": 29,
+    "gender": "men",
+    "subcategory": "pantalones",
+    "title": "jeans ",
+    "price": 133,
+    "originalPrice": 155,
+    "description": "jeans caballeros.",
+    "image": "https://res.cloudinary.com/bzvole48/image/upload/v1789328404/cfdb4efd-5574-424c-8656-ae49d086c747.jpg"
+  },
+  {
+    "id": 30,
+    "gender": "men",
+    "subcategory": "pantalones",
+    "title": "jeans ",
+    "price": 133,
+    "originalPrice": 155,
+    "description": "jeans caballeros.",
+    "image": "https://res.cloudinary.com/bzvole48/image/upload/v1789328403/c6ec05be-bd76-4c72-ab04-7daccb5fba64.jpg"
+  },
+  {
+    "id": 31,
+    "gender": "men",
+    "subcategory": "pantalones",
+    "title": "jeans ",
+    "price": 133,
+    "originalPrice": 155,
+    "description": "jeans caballeros.",
+    "image": "https://res.cloudinary.com/bzvole48/image/upload/v1789328398/a72f322d-0933-4b87-bf8c-2315a8af639f.jpg"
+  },
+  {
+    "id": 32,
+    "gender": "men",
+    "subcategory": "pantalones",
+    "title": "jeans ",
+    "price": 133,
+    "originalPrice": 155,
+    "description": "jeans caballeros.",
+    "image": "https://res.cloudinary.com/bzvole48/image/upload/v1789328397/774130dd-686d-4d00-b053-a13247a571b7.jpg"
+  },
+  {
+    "id": 33,
+    "gender": "men",
+    "subcategory": "pantalones",
+    "title": "jeans ",
+    "price": 133,
+    "originalPrice": 155,
+    "description": "jeans caballeros.",
+    "image": "https://res.cloudinary.com/bzvole48/image/upload/v1789328393/86730f70-92d1-43d1-8cea-18b1a22ff50f.jpg"
+  },
+  {
+    "id": 34,
+    "gender": "men",
+    "subcategory": "pantalones",
+    "title": "jeans ",
+    "price": 133,
+    "originalPrice": 155,
+    "description": "jeans caballeros.",
+    "image": "https://res.cloudinary.com/bzvole48/image/upload/v1789328392/83610e8a-8d17-47db-800b-edb7c350421a.jpg"
+  },
+  {
+    "id": 35,
+    "gender": "men",
+    "subcategory": "pantalones",
+    "title": "jeans ",
+    "price": 133,
+    "originalPrice": 155,
+    "description": "jeans caballeros.",
+    "image": "https://res.cloudinary.com/bzvole48/image/upload/v1789328388/68966c82-64a9-47a3-b353-e5c8b233c06c.jpg"
+  },
+  {
+    "id": 36,
+    "gender": "men",
+    "subcategory": "pantalones",
+    "title": "jeans ",
+    "price": 133,
+    "originalPrice": 155,
+    "description": "jeans caballeros.",
+    "image": "https://res.cloudinary.com/bzvole48/image/upload/v1789328388/5971ddf3-ed1d-469a-92b6-38fe628ba78d.jpg"
+  },
+  {
+    "id": 37,
+    "gender": "men",
+    "subcategory": "pantalones",
+    "title": "jeans ",
+    "price": 133,
+    "originalPrice": 155,
+    "description": "jeans caballeros.",
+    "image": "https://res.cloudinary.com/bzvole48/image/upload/v1789328384/2696a847-4f72-4847-8e7c-403882b1b118.jpg"
+  },
+  {
+    "id": 38,
+    "gender": "men",
+    "subcategory": "pantalones",
+    "title": "jeans ",
+    "price": 133,
+    "originalPrice": 155,
+    "description": "jeans caballeros.",
+    "image": "https://res.cloudinary.com/bzvole48/image/upload/v1789328383/1512cd24-7a08-4391-97f3-3a09728f6b95.jpg"
+  },
+  {
+    "id": 39,
+    "gender": "men",
+    "subcategory": "pantalones",
+    "title": "jeans ",
+    "price": 133,
+    "originalPrice": 155,
+    "description": "jeans caballeros.",
+    "image": "https://res.cloudinary.com/bzvole48/image/upload/v1789328383/867c5968-6543-4ea6-a86a-570240db7f46.jpg"
+  },
+  {
+    "id": 40,
+    "gender": "men",
+    "subcategory": "pantalones",
+    "title": "jeans ",
+    "price": 133,
+    "originalPrice": 155,
+    "description": "jeans caballeros.",
+    "image": "https://res.cloudinary.com/bzvole48/image/upload/v1789328379/613d4bec-e239-4f02-97a9-76c999bf494e.jpg"
+  },
+  {
+    "id": 41,
+    "gender": "men",
+    "subcategory": "pantalones",
+    "title": "jeans ",
+    "price": 133,
+    "originalPrice": 155,
+    "description": "jeans caballeros.",
+    "image": "https://res.cloudinary.com/bzvole48/image/upload/v1789328377/420af3dc-1eaf-4078-a43f-91f3aa820cdd.jpg"
+  },
+  {
+    "id": 42,
+    "gender": "men",
+    "subcategory": "pantalones",
+    "title": "jeans ",
+    "price": 133,
+    "originalPrice": 155,
+    "description": "jeans caballeros.",
+    "image": "https://res.cloudinary.com/bzvole48/image/upload/v1789328378/0104b886-5791-4120-ae0b-00d495eb6c53.jpg"
+  },
+  {
+    "id": 43,
+    "gender": "men",
+    "subcategory": "pantalones",
+    "title": "jeans ",
+    "price": 133,
+    "originalPrice": 155,
+    "description": "jeans caballeros.",
+    "image": "https://res.cloudinary.com/bzvole48/image/upload/v1789328374/7c40b303-b305-4b39-8963-68a23138bdc4.jpg"
+  },
+  {
+    "id": 44,
+    "gender": "men",
+    "subcategory": "pantalones",
+    "title": "jeans ",
+    "price": 133,
+    "originalPrice": 155,
+    "description": "jeans caballeros.",
+    "image": "https://res.cloudinary.com/bzvole48/image/upload/v1789328374/867c5968-6543-4ea6-a86a-570240db7f46.jpg"
+  },
+  {
+    "id": 45,
+    "gender": "men",
+    "subcategory": "pantalones",
+    "title": "jeans ",
+    "price": 133,
+    "originalPrice": 155,
+    "description": "jeans caballeros.",
+    "image": "https://res.cloudinary.com/bzvole48/image/upload/v1789328374/57f68997-5b58-4408-8b15-901bb63b2f7a.jpg"
+  },
+  {
+    "id": 46,
+    "gender": "men",
+    "subcategory": "pantalones",
+    "title": "jeans ",
+    "price": 133,
+    "originalPrice": 155,
+    "description": "jeans caballeros.",
+    "image": "https://res.cloudinary.com/bzvole48/image/upload/v1789328373/5f452765-1c8b-4245-90aa-22be9d73e671.jpg"
+  },
+  {
+    "id": 47,
+    "gender": "women",
+    "subcategory": "camisetas",
+    "title": "camiseta alto gramaje",
+    "price": 65,
+    "originalPrice": 70,
+    "description": "algodón de 270 gramos, costura decorativa .",
+    "image": "https://res.cloudinary.com/bzvole48/image/upload/v1789345710/f9c40f4a-b99f-477d-9aed-2e91ba8d67b3.jpg"
+  },
+  {
+    "id": 48,
+    "gender": "women",
+    "subcategory": "camisetas",
+    "title": "camiseta alto gramaje",
+    "price": 65,
+    "originalPrice": 70,
+    "description": "algodón de 270 gramos, costura decorativa .",
+    "image": "https://res.cloudinary.com/bzvole48/image/upload/v1789345709/bbcc2a59-0140-41d7-a421-ae31c85e10ae.jpg"
+  },
+  {
+    "id": 49,
+    "gender": "women",
+    "subcategory": "camisetas",
+    "title": "camiseta alto gramaje",
+    "price": 65,
+    "originalPrice": 70,
+    "description": "algodón de 270 gramos, costura decorativa .",
+    "image": "https://res.cloudinary.com/bzvole48/image/upload/v1789345709/85851ccb-409d-4b8e-a644-07dcbad29a11.jpg"
+  },
+  {
+    "id": 50,
+    "gender": "women",
+    "subcategory": "camisetas",
+    "title": "camiseta alto gramaje",
+    "price": 65,
+    "originalPrice": 70,
+    "description": "algodón de 270 gramos, costura decorativa .",
+    "image": "https://res.cloudinary.com/bzvole48/image/upload/v1789345710/f142cda0-8d59-46d6-93c0-5de44d2b6e6f.jpg"
+  },
+  {
+    "id": 51,
+    "gender": "women",
+    "subcategory": "camisetas",
+    "title": "camiseta alto gramaje",
+    "price": 65,
+    "originalPrice": 70,
+    "description": "algodón de 270 gramos, costura decorativa .",
+    "image": "https://res.cloudinary.com/bzvole48/image/upload/v1789345709/d05c3787-7726-45cf-a0de-2f42552d5df3.jpg"
+  },
+  {
+    "id": 52,
+    "gender": "women",
+    "subcategory": "camisetas",
+    "title": "camiseta alto gramaje",
+    "price": 65,
+    "originalPrice": 70,
+    "description": "algodón de 270 gramos, costura decorativa .",
+    "image": "https://res.cloudinary.com/bzvole48/image/upload/v1789598183/d561ac9f-807a-4603-b3f3-c1ebb8493177.jpg"
+  },
+  {
+    "id": 53,
+    "gender": "women",
+    "subcategory": "camisetas",
+    "title": "camiseta alto gramaje",
+    "price": 65,
+    "originalPrice": 70,
+    "description": "algodón de 270 gramos, costura decorativa .",
+    "image": "https://res.cloudinary.com/bzvole48/image/upload/v1789345709/6f5315ef-784c-46cb-ade9-83fef2c22ad8.jpg"
+  },
+  {
+    "id": 55,
+    "gender": "women",
+    "subcategory": "camisetas",
+    "title": "camiseta alto gramaje",
+    "price": 65,
+    "originalPrice": 70,
+    "description": "algodón de 270 gramos, costura decorativa .",
+    "image": "https://res.cloudinary.com/bzvole48/image/upload/v1789345709/91b5b142-18e4-48b6-ba9e-5e27a965c0f6.jpg"
+  },
+  {
+    "id": 56,
+    "gender": "women",
+    "subcategory": "camisetas",
+    "title": "camiseta alto gramaje",
+    "price": 65,
+    "originalPrice": 70,
+    "description": "algodón de 270 gramos, costura decorativa .",
+    "image": "https://res.cloudinary.com/bzvole48/image/upload/v1789345709/0471c1ac-ff50-4e2c-bcc8-723f1c88cde1.jpg"
+  },
+  {
+    "id": 57,
+    "gender": "women",
+    "subcategory": "camisetas",
+    "title": "camiseta alto gramaje",
+    "price": 65,
+    "originalPrice": 70,
+    "description": "algodón de 270 gramos, costura decorativa .",
+    "image": "https://res.cloudinary.com/bzvole48/image/upload/v1789345708/6a1b613a-5c36-498e-bbe6-7cbaa7b50b50_1.jpg"
+  },
+  {
+    "id": 58,
+    "gender": "women",
+    "subcategory": "camisetas",
+    "title": "camiseta alto gramaje",
+    "price": 65,
+    "originalPrice": 70,
+    "description": "algodón de 270 gramos, costura decorativa .",
+    "image": "https://res.cloudinary.com/bzvole48/image/upload/v1789345708/6ac9cbfd-997c-4371-beb9-4fc2627a3385.jpg"
+  },
+  {
+    "id": 60,
+    "gender": "women",
+    "subcategory": "camisetas",
+    "title": "camiseta alto gramaje",
+    "price": 65,
+    "originalPrice": 70,
+    "description": "algodón de 270 gramos, costura decorativa .",
+    "image": "https://res.cloudinary.com/bzvole48/image/upload/v1789345708/72ed4eed-5410-4134-9ecb-1dd4e08a4b0f.jpg"
+  },
+  {
+    "id": 61,
+    "gender": "women",
+    "subcategory": "camisetas",
+    "title": "camiseta alto gramaje",
+    "price": 65,
+    "originalPrice": 70,
+    "description": "algodón de 270 gramos, costura decorativa .",
+    "image": "https://res.cloudinary.com/bzvole48/image/upload/v1789345708/6a1b613a-5c36-498e-bbe6-7cbaa7b50b50.jpg"
+  },
+  {
+    "id": 62,
+    "gender": "women",
+    "subcategory": "accesorios",
+    "title": "topos ORO 18K",
+    "price": 340,
+    "originalPrice": 400,
+    "description": "0,80 gramos.",
+    "image": "https://res.cloudinary.com/bzvole48/image/upload/v1789430702/IMG_1331.jpg"
+  },
+  {
+    "id": 63,
+    "gender": "women",
+    "subcategory": "accesorios",
+    "title": "topos ORO 18K",
+    "price": 255,
+    "originalPrice": 320,
+    "description": "0,60 gramos.",
+    "image": "https://res.cloudinary.com/bzvole48/image/upload/v1789430702/IMG_1332.jpg"
+  },
+  {
+    "id": 64,
+    "gender": "women",
+    "subcategory": "accesorios",
+    "title": "topos ORO 18K",
+    "price": 295,
+    "originalPrice": 320,
+    "description": "0,69 gramos.",
+    "image": "https://res.cloudinary.com/bzvole48/image/upload/v1789430703/IMG_1333.jpg"
+  },
+  {
+    "id": 65,
+    "gender": "women",
+    "subcategory": "accesorios",
+    "title": "topos ORO 18K",
+    "price": 185,
+    "originalPrice": 210,
+    "description": "0,42 & 0,41 gramos.",
+    "image": "https://res.cloudinary.com/bzvole48/image/upload/v1789430703/IMG_1338.jpg"
+  },
+  {
+    "id": 66,
+    "gender": "women",
+    "subcategory": "accesorios",
+    "title": "pulsera ORO 18K",
+    "price": 210,
+    "originalPrice": 250,
+    "description": "pulseras tejidas, en oro 18K.",
+    "image": "https://res.cloudinary.com/bzvole48/image/upload/v1789435168/IMG_1339.jpg"
+  },
+  {
+    "id": 67,
+    "gender": "women",
+    "subcategory": "accesorios",
+    "title": "pulsera ORO 18K",
+    "price": 400,
+    "originalPrice": 450,
+    "description": "pulseras tejidas, con inicial.",
+    "image": "https://res.cloudinary.com/bzvole48/image/upload/v1789435168/IMG_1340.jpg"
+  },
+  {
+    "id": 68,
+    "gender": "women",
+    "subcategory": "accesorios",
+    "title": "pulsera ORO 18K",
+    "price": 690,
+    "originalPrice": 750,
+    "description": "combo con inicial.",
+    "image": "https://res.cloudinary.com/bzvole48/image/upload/v1789435168/IMG_1341.jpg"
+  },
+  {
+    "id": 69,
+    "gender": "women",
+    "subcategory": "busos",
+    "title": "buso",
+    "price": 80,
+    "originalPrice": 100,
+    "description": "tela hilo.",
+    "image": "https://res.cloudinary.com/bzvole48/image/upload/v1789601432/4.jpg",
+    "images": [
+      "https://res.cloudinary.com/bzvole48/image/upload/v1789601432/3.jpg",
+      "https://res.cloudinary.com/bzvole48/image/upload/v1789601432/2.jpg",
+      "https://res.cloudinary.com/bzvole48/image/upload/v1789601432/6.jpg",
+      "https://res.cloudinary.com/bzvole48/image/upload/v1789601432/5.jpg",
+      "https://res.cloudinary.com/bzvole48/image/upload/v1789601432/7.jpg"
+    ]
+  }
+]

@@ -122,6 +122,18 @@ async function crearTablaCarrito() {
   }
 }
 
+app.get('/products', async (req, res) => {
+  try {
+    const result = await pool.query(
+      'SELECT id, genero AS gender, subcategoria AS subcategory, nombre AS title, precio AS price, precio_original AS "originalPrice", descripcion AS description, imagen_url AS image, imagenes AS images, referencia AS reference FROM productos WHERE referencia IS NOT NULL ORDER BY id'
+    );
+    res.json({ products: result.rows });
+  } catch (error) {
+    console.error('Error consultando productos:', error);
+    res.status(500).json({ error: 'No fue posible cargar los productos' });
+  }
+});
+
 // Comprobar conexión con PostgreSQL
 app.get("/ping", async (req, res) => {
   try {
