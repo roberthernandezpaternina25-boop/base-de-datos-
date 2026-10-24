@@ -274,13 +274,24 @@ async function loadProducts() {
     if (!response.ok) throw new Error('No se pudieron cargar los productos');
     const result = await response.json();
     products = Array.isArray(result.products) ? result.products : [];
-    products = products.map(product => ({
-      ...product,
-      id: Number(product.id),
-      price: Number(product.price),
-      originalPrice: product.originalPrice === null ? undefined : Number(product.originalPrice),
-      images: Array.isArray(product.images) ? product.images : []
-    }));
+    products = products.map(product => {
+      const rawGender = String(product.gender || '').trim().toLowerCase();
+      const gender = ['women', 'woman', 'mujer', 'damas'].includes(rawGender)
+        ? 'women'
+        : ['men', 'hombre', 'caballero', 'caballeros'].includes(rawGender)
+          ? 'men'
+          : rawGender;
+
+      return {
+        ...product,
+        id: Number(product.id),
+        gender,
+        subcategory: String(product.subcategory || '').trim().toLowerCase(),
+        price: Number(product.price),
+        originalPrice: product.originalPrice === null ? undefined : Number(product.originalPrice),
+        images: Array.isArray(product.images) ? product.images : []
+      };
+    });
     nextProductId = products.reduce((maximum, product) => Math.max(maximum, product.id), 0) + 1;
     renderSubcategoryButtons();
     renderInitialProducts();
@@ -735,3 +746,4 @@ if (productCategorySelect) {
 
 updateAddProductSubcategories();
 productCatalogReady = loadProducts();
+
