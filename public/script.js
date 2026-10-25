@@ -44,11 +44,29 @@ const subcategories = {
   ]
 };
 
+function getSubcategoriesForGender(gender) {
+  const known = subcategories[gender] || [];
+  const fromProducts = products
+    .filter(product => product.gender === gender && product.subcategory)
+    .map(product => product.subcategory);
+  const ids = [...new Set([...known.map(item => item.id), ...fromProducts])]
+    .filter(id => id !== 'all');
+
+  return [
+    { id: 'all', label: 'Ver todos' },
+    ...ids.map(id => ({
+      id,
+      label: known.find(item => item.id === id)?.label
+        || id.charAt(0).toUpperCase() + id.slice(1)
+    }))
+  ];
+}
+
 function updateAddProductSubcategories() {
   if (!productCategorySelect || !productSubcategorySelect) return;
 
   const gender = productCategorySelect.value;
-  const options = subcategories[gender].filter(item => item.id !== 'all');
+  const options = getSubcategoriesForGender(gender).filter(item => item.id !== 'all');
   productSubcategorySelect.innerHTML = options.map(option => `
     <option value="${option.id}">${option.label}</option>
   `).join('');
@@ -359,7 +377,7 @@ function renderSubcategoryButtons() {
     return;
   }
 
-  subcategories[currentCategory].forEach(subcategory => {
+  getSubcategoriesForGender(currentCategory).forEach(subcategory => {
     const button = document.createElement('button');
     button.type = 'button';
     button.className = `filter-btn ${subcategory.id === currentSubcategory ? 'active' : ''}`;
