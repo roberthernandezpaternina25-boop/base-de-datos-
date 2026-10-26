@@ -40,7 +40,6 @@ const subcategories = {
     { id: 'camisetas', label: 'Camisetas' },
     { id: 'pantalones', label: 'Pantalones' },
     { id: 'accesorios', label: 'Accesorios' },
-    { id: 'busos', label: 'Busos' }
   ]
 };
 
@@ -50,7 +49,7 @@ function getSubcategoriesForGender(gender) {
     .filter(product => product.gender === gender && product.subcategory)
     .map(product => product.subcategory);
   const ids = [...new Set([...known.map(item => item.id), ...fromProducts])]
-    .filter(id => id !== 'all');
+    .filter(id => id !== 'all' && !(gender === 'women' && id === 'busos'));
 
   return [
     { id: 'all', label: 'Ver todos' },
