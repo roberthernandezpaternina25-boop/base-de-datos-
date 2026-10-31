@@ -634,7 +634,7 @@ main {
 .product-card img {
   width: 100%;
   aspect-ratio: 4 / 3;
-  object-fit: cover;
+  object-fit: contain;
   border-radius: var(--radius-s);
   border: 1px solid var(--line);
   cursor: pointer;
