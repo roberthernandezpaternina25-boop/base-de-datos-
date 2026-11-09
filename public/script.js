@@ -379,9 +379,16 @@ function renderSubcategoryButtons() {
   getSubcategoriesForGender(currentCategory).forEach(subcategory => {
     const button = document.createElement('button');
     button.type = 'button';
-    button.className = `filter-btn ${subcategory.id === currentSubcategory ? 'active' : ''}`;
+    button.className = `subcategory-card ${subcategory.id === currentSubcategory ? 'active' : ''}`;
     button.dataset.subcategory = subcategory.id;
-    button.textContent = subcategory.label;
+    const latestProduct = products.find(product =>
+      product.gender === currentCategory
+      && (subcategory.id === 'all' || product.subcategory === subcategory.id)
+      && getProductImages(product)[0]
+    );
+    const image = latestProduct ? getProductImages(latestProduct)[0] : '';
+    button.innerHTML = `${image ? `<img src="${escapeHtml(image)}" alt="" loading="lazy" />` : '<span class="subcategory-card-placeholder" aria-hidden="true">✦</span>'}<span class="subcategory-card-label">${escapeHtml(subcategory.label)}</span>`;
+    button.setAttribute('aria-pressed', String(subcategory.id === currentSubcategory));
     button.addEventListener('click', () => {
       currentSubcategory = subcategory.id;
       renderSubcategoryButtons();
