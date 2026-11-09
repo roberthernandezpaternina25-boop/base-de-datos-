@@ -310,6 +310,7 @@ async function loadProducts() {
       };
     });
     nextProductId = products.reduce((maximum, product) => Math.max(maximum, product.id), 0) + 1;
+    updateCategoryButtons(currentCategory);
     renderSubcategoryButtons();
     renderInitialProducts();
   } catch (error) {
@@ -319,40 +320,48 @@ async function loadProducts() {
 }
 
 function renderInitialProducts() {
-  const groups = [...new Map(products.map(product => [
-    `${product.gender}-${product.subcategory}`,
-    products.filter(item => item.gender === product.gender && item.subcategory === product.subcategory)
-  ])).values()];
+  const genders = [
+    { id: 'men', label: 'Caballeros' },
+    { id: 'women', label: 'Damas' }
+  ];
 
-  productList.innerHTML = groups.map(group => {
-    const firstProduct = group[0];
-    const categoryLabel = firstProduct.gender === 'men' ? 'Caballeros' : 'Damas';
-    const subcategoryLabel = firstProduct.subcategory.charAt(0).toUpperCase() + firstProduct.subcategory.slice(1);
-    const previewProducts = group.slice(0, 3);
+  productList.innerHTML = genders.map(gender => {
+    const genderProducts = products.filter(product => product.gender === gender.id);
+
+    const subcategoryCards = getSubcategoriesForGender(gender.id).map(subcategory => {
+      const latestProduct = genderProducts.find(product =>
+        (subcategory.id === 'all' || product.subcategory === subcategory.id)
+        && getProductImages(product)[0]
+      );
+      const image = latestProduct ? getProductImages(latestProduct)[0] : '';
+
+      return `
+        <button class="subcategory-card home-subcategory-card${subcategory.id === 'all' ? ' active' : ''}" type="button" data-category="${gender.id}" data-subcategory="${subcategory.id}">
+          ${image ? `<img src="${escapeHtml(image)}" alt="" loading="lazy" />` : '<span class="subcategory-card-placeholder" aria-hidden="true">✦</span>'}
+          <span class="subcategory-card-label">${escapeHtml(subcategory.label)}</span>
+        </button>
+      `;
+    }).join('');
 
     return `
-      <section class="product-category-group">
-        <div class="product-category-heading">
-          <div>
-            <p class="eyebrow">${categoryLabel}</p>
-            <h3>${escapeHtml(subcategoryLabel)}</h3>
-          </div>
-          <button class="btn btn-secondary similar-products-btn" type="button" data-category="${firstProduct.gender}" data-subcategory="${firstProduct.subcategory}">Ver productos similares</button>
+      <section class="home-category-section">
+        <div class="home-category-heading">
+          <p class="eyebrow">${gender.label}</p>
         </div>
-        <div class="product-grid product-preview-grid">${renderProductCards(previewProducts)}</div>
+        <div class="home-subcategory-rail" aria-label="Subcategorías de ${gender.label}">${subcategoryCards}</div>
+        <div class="product-grid product-preview-grid">${renderProductCards(genderProducts.slice(0, 3))}</div>
       </section>
     `;
   }).join('');
 
   bindProductEvents(products);
-  document.querySelectorAll('.similar-products-btn').forEach(button => {
+  document.querySelectorAll('.home-subcategory-card').forEach(button => {
     button.addEventListener('click', () => {
       currentCategory = button.dataset.category;
       currentSubcategory = button.dataset.subcategory;
       updateCategoryButtons(currentCategory);
       renderSubcategoryButtons();
       renderProducts(getFilteredProducts());
-      productList.scrollIntoView({ behavior: 'smooth', block: 'start' });
     });
   });
 }
@@ -408,7 +417,11 @@ categoryButtons.forEach(button => {
     currentSubcategory = 'all';
     updateCategoryButtons(currentCategory);
     renderSubcategoryButtons();
-    renderProducts(getFilteredProducts());
+    if (currentCategory === 'all') {
+      renderInitialProducts();
+    } else {
+      renderProducts(getFilteredProducts());
+    }
   });
 });
 

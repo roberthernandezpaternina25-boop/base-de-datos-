@@ -420,6 +420,39 @@ main {
   grid-column: 1 / -1;
 }
 
+.home-category-section {
+  grid-column: 1 / -1;
+  padding: 20px 0 6px;
+}
+
+.home-category-section + .home-category-section {
+  margin-top: 8px;
+  border-top: 1px solid var(--line);
+}
+
+.home-category-heading {
+  margin-bottom: 12px;
+}
+
+.home-category-heading .eyebrow {
+  margin-bottom: 0;
+  color: var(--text);
+}
+
+.home-subcategory-rail {
+  display: flex;
+  gap: 16px;
+  margin: 0 -4px 22px;
+  padding: 4px 4px 12px;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scrollbar-width: thin;
+}
+
+.home-subcategory-card {
+  flex-basis: 116px;
+}
+
 .product-category-heading {
   display: flex;
   justify-content: space-between;
