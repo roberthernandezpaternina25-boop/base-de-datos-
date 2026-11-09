@@ -1385,18 +1385,111 @@ footer {
 }
 
 @media (max-width: 720px) {
+  body {
+    font-size: 16px;
+  }
+
+  .hero {
+    padding-bottom: 24px;
+  }
+
   .navbar {
-    padding: 18px 16px;
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto auto;
+    gap: 8px;
+    align-items: center;
+    padding: 12px 16px;
+  }
+
+  .brand {
+    grid-column: 1;
+    grid-row: 1;
+    font-size: 1.25rem;
+  }
+
+  .menu-toggle {
+    grid-column: 2;
+    grid-row: 1;
+    padding: 8px 10px;
+  }
+
+  .nav-buttons {
+    grid-column: 3;
+    grid-row: 1;
+    flex-wrap: nowrap;
+    gap: 6px;
+  }
+
+  .btn-auth,
+  .cart-pill {
+    padding: 8px 9px;
+    font-size: 0.68rem;
+    letter-spacing: 0;
   }
 
   .hero-content {
-    padding: 40px 16px 0;
+    gap: 22px;
+    padding: 30px 16px 0;
+  }
+
+  h1 {
+    font-size: clamp(2rem, 8vw, 3rem);
+    line-height: 1.02;
+    transform: none;
+  }
+
+  .hero-text {
+    margin-top: 16px;
+    font-size: 0.98rem;
+    line-height: 1.55;
+  }
+
+  .hero-actions {
+    gap: 10px;
+    margin-top: 20px;
+  }
+
+  .hero-actions .btn {
+    min-height: 44px;
+    padding: 12px 16px;
+    font-size: 0.76rem;
+  }
+
+  .hero-card {
+    padding: 22px;
+  }
+
+  .hero-card h3 {
+    font-size: 1.12rem;
+  }
+
+  .hero-card p,
+  .hero-card ul {
+    line-height: 1.55;
+  }
+
+  .hero-card li {
+    padding: 9px 0;
+  }
+
+  main {
+    padding: 0 0 40px;
   }
 
   .products-section,
   .promo-banner,
   .contact-section {
     padding: 0 16px;
+  }
+
+  .section-header {
+    padding-top: 36px;
+    margin-bottom: 20px;
+  }
+
+  .section-header h2 {
+    font-size: 1.7rem;
   }
 
   .section-header {
@@ -1417,6 +1510,10 @@ footer {
 
   .menu-toggle {
     display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    min-width: 42px;
+    min-height: 42px;
   }
 
   .nav-links {
@@ -1447,7 +1544,133 @@ footer {
   }
 
   .product-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+  }
+
+  .product-grid > .product-card:only-child {
+    grid-column: 1 / -1;
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto;
+  }
+
+  .category-filters {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding-bottom: 6px;
+    scrollbar-width: none;
+  }
+
+  .category-filters .filter-btn {
+    flex: 0 0 auto;
+    min-height: 42px;
+  }
+
+  .subcategory-card,
+  .home-subcategory-card {
+    flex-basis: 88px;
+    font-size: 0.86rem;
+  }
+
+  .subcategory-card img,
+  .subcategory-card-placeholder {
+    width: 88px;
+    height: 88px;
+    border-radius: 13px;
+  }
+
+  .subcategory-card-label {
+    font-size: 0.82rem;
+  }
+
+  .home-subcategory-rail {
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+
+  .product-card {
+    min-width: 0;
+    padding: 10px;
+    gap: 10px;
+  }
+
+  .product-gallery {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 7px;
+  }
+
+  .product-thumbnails {
+    flex-direction: row;
+    width: 100%;
+    max-height: 52px;
+    overflow-x: auto;
+  }
+
+  .product-thumbnail {
+    flex: 0 0 46px;
+  }
+
+  .product-card h3 {
+    font-size: 0.92rem;
+    line-height: 1.25;
+  }
+
+  .product-card p {
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    font-size: 0.8rem;
+    line-height: 1.45;
+  }
+
+  .product-meta {
+    gap: 5px;
+  }
+
+  .product-tag {
+    margin-top: 7px;
+    padding: 4px 7px;
+    font-size: 0.62rem;
+  }
+
+  .product-reference {
+    font-size: 0.62rem;
+  }
+
+  .product-footer {
+    align-items: flex-start;
+    gap: 8px;
+    padding-top: 10px;
+  }
+
+  .price-group,
+  .product-actions {
+    width: 100%;
+  }
+
+  .price-current {
+    font-size: 0.95rem;
+  }
+
+  .product-actions {
+    gap: 6px;
+  }
+
+  .add-to-cart,
+  .whatsapp-btn {
+    flex: 1 1 100%;
+    min-height: 40px;
+    padding: 8px;
+    font-size: 0.68rem;
+  }
+
+  .similar-products-link {
+    min-height: 36px;
+    gap: 5px;
+    padding: 6px;
+    font-size: 0.68rem;
   }
 
   .image-nav-left {
@@ -1456,5 +1679,25 @@ footer {
 
   .image-nav-right {
     right: 4px;
+  }
+}
+
+@media (max-width: 360px) {
+  .navbar {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+
+  .menu-toggle {
+    grid-column: 2;
+  }
+
+  .nav-buttons {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    justify-content: flex-end;
+  }
+
+  .product-grid {
+    grid-template-columns: 1fr;
   }
 }
